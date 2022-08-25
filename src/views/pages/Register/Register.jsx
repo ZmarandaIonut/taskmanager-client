@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import { useNavigate } from 'react-router';
-import userImg from "./imgs/user.png"
-import emailImg from "./imgs/mail.png"
-import passwordImg from "./imgs/padlock.png"
+import userImg from "../../resources/imgs/user.png"
+import emailImg from "../../resources/imgs/mail.png"
+import passwordImg from "../../resources/imgs/padlock.png"
 import mainPageShape from "../../resources/shapes/mainPageShape.png"
 import classes from "./Register.module.scss"
 import reusable from "./../../resources/css/reusable.module.scss"
@@ -37,6 +37,9 @@ const Register = () => {
     registerUser(payload);
   }
    useEffect(() => {
+    if(isLoading){
+        setAppError("");
+    }
     if(isError){
        return setAppError(Object.values(error.data.errors)[0][0]);
       }
@@ -49,46 +52,48 @@ const Register = () => {
         <div className={reusable.main_container_shape}>
             <img src={mainPageShape}/>
         </div>
-        <div className={classes.register_container}>
-            <h1>Register</h1>
+        <div className={reusable.center_panel}>
+           <div className={reusable.panelContent}>
+           <h1>Register</h1>
             <form onSubmit={handleSubmit(submitForm)}>
-              <div className={classes.register_input}>
-                <div className={classes.register_img_container}>
+              <div className={reusable.form_div}>
+                <div className={reusable.form_img_container}>
                     <img alt='user' src={userImg} width="20px"/>
                 </div>
                 <input name='Name' placeholder='Name' {...(register('Name'))} autoFocus={true}/>
                </div>
                {errors.Name && <p className={classes.val_error}>{errors.Name.message}</p>}
-               <div className={classes.register_input}>
-                    <div className={classes.register_img_container}>
+               <div className={reusable.form_div}>
+                    <div className={reusable.form_img_container}>
                         <img alt='user' src={emailImg} width="20px"/>
                     </div>
                    <input name='Email' placeholder='Email' {...(register('Email'))}/>
                 </div>
                 {errors.Email && <p className={classes.val_error}>{errors.Email.message}</p>}
-                <div className={classes.register_input}>
-                    <div className={classes.register_img_container}>
+                <div className={reusable.form_div}>
+                    <div className={reusable.form_img_container}>
                         <img alt='user' src={passwordImg} width="20px"/>
                     </div>
                     <input type="password" name='Password' placeholder='Password' {...(register('Password'))}/>
                 </div>
                 {errors.Password && <p className={classes.val_error}>{errors.Password.message}</p>}
-                <div className={classes.register_input}>
-                    <div className={classes.register_img_container}>
+                <div className={reusable.form_div}>
+                    <div className={reusable.form_img_container}>
                         <img alt='user' src={passwordImg} width="20px"/>
                     </div>
                     <input type="password" name='ConfirmPassword' placeholder='Password' {...(register('ConfirmPassword'))}/>
                 </div>
                 {errors.ConfirmPassword && <p className={classes.val_error}>Passwords must match</p>}
                 {appError && <p className={reusable.form_response_error}>{appError}</p>}
-                {isLoading ? <LoadingSpinner/> : <div className={classes.register_btn_container}>
+                {isLoading ? <LoadingSpinner/> : <div className={reusable.form_btn_container}>
                                                         <button >Register</button>
                                                    </div>}
             </form>
-            <div className={classes.anno}>
+            <div className={reusable.form_anno}>
                 <p>Already have an account?</p>
                 <p><strong>Log in now!</strong></p>
             </div>
+           </div>
         </div>
     </div>
   )
