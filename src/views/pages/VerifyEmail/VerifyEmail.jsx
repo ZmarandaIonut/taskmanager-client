@@ -9,6 +9,7 @@ import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import LoadingSpinner from '../../utils/LoadingSpinner/LoadingSpinner';
+import classes from "./VerifyEmail.module.scss"
 
 const VerifyEmail = () => {
   const [appError, setAppError] = useState();
@@ -44,6 +45,7 @@ useEffect(() => {
         <div className={reusable.main_container_shape}>
             <img src={mainPageShape}/>
         </div>
+        {console.log(errors)}
         <div className={reusable.center_panel}>
           <div className={reusable.panelContent}>
           <h1>Verify Email</h1>
@@ -54,12 +56,14 @@ useEffect(() => {
                   </div>
                   <input name='Email' placeholder='Email address' autoFocus={true} {...(register('Email'))}/>
             </div>
+            {errors.Email && <p className={classes.val_error}>{errors.Email.message}</p>}
             <div className={reusable.form_div}>
                   <div className={reusable.form_img_container}>
                       <img alt='mailImg' src={codeImg} width="20px"/>
                   </div>
                   <input name='Code' placeholder='Code' {...(register('Code'))}/>
             </div>
+            {errors.Code && <p className={classes.val_error}>{errors.Code.message}</p>}
             {appError && <p className={reusable.form_response_error}>{appError}</p>}
             {isLoading ? <LoadingSpinner/> : <div className={reusable.form_btn_container}>
                                                 <button >Verify Email</button>
