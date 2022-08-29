@@ -47,6 +47,7 @@ const Register = () => {
         return navigate("/verify-email");
       }
    }, [isError, isSuccess])
+   console.log(process.env.REACT_APP_SERVER_URL)
   return (
     <div className={reusable.main_container}>
         <div className={reusable.main_container_shape}>

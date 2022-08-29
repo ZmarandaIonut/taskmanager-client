@@ -45,7 +45,6 @@ useEffect(() => {
         <div className={reusable.main_container_shape}>
             <img src={mainPageShape}/>
         </div>
-        {console.log(errors)}
         <div className={reusable.center_panel}>
           <div className={reusable.panelContent}>
           <h1>Verify Email</h1>
