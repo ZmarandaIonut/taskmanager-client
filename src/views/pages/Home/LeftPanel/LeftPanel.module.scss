@@ -1,0 +1,51 @@
+$mainColor: #F4F4F4;
+$secColor: #9189F8;
+
+.mainPanel{
+    height: 90%;
+    width: 15rem;
+    background-color: $mainColor;
+    opacity: 0.90;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    -webkit-box-shadow: -4px -1px 9px -1px rgba(0,0,0,0.56); 
+    box-shadow: -4px -1px 9px -1px rgba(0,0,0,0.56);
+    font-weight: 600;
+}
+.userSection{
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 0;
+    border-bottom: 3px solid #979797;
+}
+.Usershape{
+    background-color: $secColor;
+    width: 2rem;
+    height: 2rem;
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+}
+.shape{
+    background-color: $secColor;
+    width: 1.2rem;
+    height: 1.2rem;
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+}
+.navListContainer{
+    display: flex;
+    align-items: center;
+    margin-bottom: .8rem;
+    cursor: pointer;
+}
+.navListContainer:hover{
+    transition: 0.3s;
+    transform: scale(1.05);
+    background-color: #d4d4d4;
+}

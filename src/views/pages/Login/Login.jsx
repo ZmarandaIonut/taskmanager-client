@@ -26,7 +26,6 @@ const Login = () => {
  
  const [loginUser, {data:result, isSuccess, isLoading, isError, error}] = useLoginUserMutation();
 
-  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -56,7 +55,6 @@ const Login = () => {
 
   return (
     <div className={reusable.main_container}>
-      {console.log(user)}
     <div className={reusable.main_container_shape}>
         <img src={mainPageShape}/>
     </div>
