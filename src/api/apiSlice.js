@@ -24,6 +24,13 @@ export const apiSlice = createApi({
                 method: "POST",
                 body: payload
             })
+        }),
+        resendVerifyEmail: builder.mutation({
+            query: (payload) => ({
+                url: "/resend-verify-email",
+                method: "POST",
+                body: payload
+            })
         })
     }),
   })
@@ -31,5 +38,6 @@ export const apiSlice = createApi({
   export const {
     useLoginUserMutation,
     useRegisterUserMutation,
-    useVerifyEmailMutation
+    useVerifyEmailMutation,
+    useResendVerifyEmailMutation
   } = apiSlice;

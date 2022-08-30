@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { useNavigate } from 'react-router';
+import { useNavigate} from 'react-router';
 import reusable from "./../../resources/css/reusable.module.scss";
 import mainPageShape from "../../resources/shapes/mainPageShape.png"
 import mailImg from "../../resources/imgs/mail.png"
