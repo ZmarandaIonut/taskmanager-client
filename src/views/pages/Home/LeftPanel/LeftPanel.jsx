@@ -1,13 +1,10 @@
-import React from 'react'
+import React from "react";
 
 const LeftPanel = () => {
   return (
     <div>
-        <div>
-            
-        </div>
-    </div>
-  )
-}
+      </div>
+  );
+};
 
-export default LeftPanel
+export default LeftPanel;

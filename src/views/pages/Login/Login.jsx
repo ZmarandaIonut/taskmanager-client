@@ -46,6 +46,7 @@ const Login = () => {
        return setAppError(error.data.message);
       }
       if(isSuccess){
+        console.log(user);
         dispatch(addUser(result.data.user));
         sessionStorage.setItem("token", result.data.token);
         return navigate("/");
@@ -54,9 +55,12 @@ const Login = () => {
    }, [isError, isSuccess])
 
 
+   const _register = () =>{
+    return navigate("/register");
+   }
+
   return (
     <div className={reusable.main_container}>
-      {console.log(user)}
     <div className={reusable.main_container_shape}>
         <img src={mainPageShape}/>
     </div>
@@ -85,7 +89,7 @@ const Login = () => {
         </form>
         <div className={reusable.form_anno}>
             <p>Don't have an account?</p>
-            <p><strong>Register now!</strong></p>
+            <p onClick={_register}><strong>Register now!</strong></p>
         </div>
        </div>
     </div>
