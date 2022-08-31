@@ -2,7 +2,13 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const apiSlice = createApi({
     reducerPath: 'api',
-    baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_SERVER_URL }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_SERVER_URL, prepareHeaders: (headers, {getState}) => {
+        const token = sessionStorage.getItem("token");
+        if(token){
+            headers.set("Authorization", `Bearer ${token}`);
+        }
+        return headers;
+    } }),
     endpoints: (builder) => ({
         loginUser: builder.mutation({
             query: (payload) => ({
@@ -24,6 +30,13 @@ export const apiSlice = createApi({
                 method: "POST",
                 body: payload
             })
+        }),
+
+        getUserBoards: builder.query({
+            query: (page = 1) => `/get-user-boards?page=${page}`
+        }),
+        getBoardsWhereUserIsMember: builder.query({
+            query: (page = 1) => `/get-joined-boards?page=${page}`
         })
     }),
   })
@@ -31,5 +44,7 @@ export const apiSlice = createApi({
   export const {
     useLoginUserMutation,
     useRegisterUserMutation,
-    useVerifyEmailMutation
+    useVerifyEmailMutation,
+    useGetUserBoardsQuery,
+    useGetBoardsWhereUserIsMemberQuery
   } = apiSlice;
