@@ -53,6 +53,10 @@ const Login = () => {
    }, [isError, isSuccess])
 
 
+   const _register = () =>{
+    return navigate("/register");
+   }
+
   return (
     <div className={reusable.main_container}>
     <div className={reusable.main_container_shape}>
@@ -83,7 +87,7 @@ const Login = () => {
         </form>
         <div className={reusable.form_anno}>
             <p>Don't have an account?</p>
-            <p><strong>Register now!</strong></p>
+            <p onClick={_register}><strong>Register now!</strong></p>
         </div>
        </div>
     </div>

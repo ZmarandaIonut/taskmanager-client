@@ -3,20 +3,18 @@ import { useNavigate } from "react-router";
 import reusable from "./../../resources/css/reusable.module.scss";
 import mainPageShape from "../../resources/shapes/mainPageShape.png";
 import mailImg from "../../resources/imgs/mail.png";
-import codeImg from "../../resources/imgs/smartphone.png";
-import { useVerifyEmailMutation } from "../../../api/apiSlice";
+import { useResendVerifyEmailMutation } from "../../../api/apiSlice";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import LoadingSpinner from "../../utils/LoadingSpinner/LoadingSpinner";
-import classes from "./VerifyEmail.module.scss";
+import classes from "./ResendVerifyEmail.module.scss";
 
-const VerifyEmail = () => {
+const ResendVerifyEmail = () => {
   const [appError, setAppError] = useState();
   const navigate = useNavigate();
   const schema = yup.object().shape({
     Email: yup.string().email().required(),
-    Code: yup.string().required(),
   });
   const {
     register,
@@ -25,14 +23,13 @@ const VerifyEmail = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const [verifyEmail, { isSuccess, isLoading, isError, error }] =
-    useVerifyEmailMutation();
+  const [resendVerifyEmail, { isSuccess, isLoading, isError, error }] =
+    useResendVerifyEmailMutation();
   const submitForm = (data) => {
     const payload = {
       email: data.Email,
-      code: data.Code,
     };
-    verifyEmail(payload);
+    resendVerifyEmail(payload);
   };
   useEffect(() => {
     if (isLoading) {
@@ -42,13 +39,10 @@ const VerifyEmail = () => {
       setAppError(error.data.message);
     }
     if (isSuccess) {
-      return navigate("/login");
+      return navigate("/verify-email");
     }
   }, [isError, isSuccess]);
 
-  const _resendVerifyEmail = () => {
-    return navigate("/resend-verify-email");
-  };
 
   return (
     <div className={reusable.main_container}>
@@ -57,7 +51,7 @@ const VerifyEmail = () => {
       </div>
       <div className={reusable.center_panel}>
         <div className={reusable.panelContent}>
-          <h1>Verify Email</h1>
+          <h1>Resend Verify Email Code</h1>
           <form onSubmit={handleSubmit(submitForm)}>
             <div className={reusable.form_div}>
               <div className={reusable.form_img_container}>
@@ -73,15 +67,7 @@ const VerifyEmail = () => {
             {errors.Email && (
               <p className={classes.val_error}>{errors.Email.message}</p>
             )}
-            <div className={reusable.form_div}>
-              <div className={reusable.form_img_container}>
-                <img alt="mailImg" src={codeImg} width="20px" />
-              </div>
-              <input name="Code" placeholder="Code" {...register("Code")} />
-            </div>
-            {errors.Code && (
-              <p className={classes.val_error}>{errors.Code.message}</p>
-            )}
+
             {appError && (
               <p className={reusable.form_response_error}>{appError}</p>
             )}
@@ -89,20 +75,15 @@ const VerifyEmail = () => {
               <LoadingSpinner />
             ) : (
               <div className={reusable.form_btn_container}>
-                <button>Verify Email</button>
+                <button>Resend code</button>
               </div>
             )}
           </form>
-          <div className={reusable.form_anno}>
-            <p>Didn't received any code?</p>
-            <p onClick={_resendVerifyEmail}>
-              <strong>Resend email</strong>
-            </p>
-          </div>
+          <div className={reusable.form_anno}></div>
         </div>
       </div>
     </div>
   );
 };
 
-export default VerifyEmail;
+export default ResendVerifyEmail;

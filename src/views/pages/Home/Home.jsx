@@ -23,6 +23,7 @@ const Home = () => {
         }
     }, [])
 
+
   return (
     <div className={classes.main_container}>
         <div className={reusable.main_container_shape}>

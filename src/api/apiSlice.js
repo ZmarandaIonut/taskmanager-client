@@ -31,13 +31,19 @@ export const apiSlice = createApi({
                 body: payload
             })
         }),
-
+        resendVerifyEmail: builder.mutation({
+            query: (payload) => ({
+                 url: "/resend-verify-email",
+                 method: "POST",
+                 body: payload
+            })
+        }),
         getUserBoards: builder.query({
             query: (page = 1) => `/get-user-boards?page=${page}`
         }),
         getBoardsWhereUserIsMember: builder.query({
             query: (page = 1) => `/get-joined-boards?page=${page}`
-        })
+        }),
     }),
   })
 
@@ -46,5 +52,6 @@ export const apiSlice = createApi({
     useRegisterUserMutation,
     useVerifyEmailMutation,
     useGetUserBoardsQuery,
-    useGetBoardsWhereUserIsMemberQuery
+    useGetBoardsWhereUserIsMemberQuery,
+    useResendVerifyEmailMutation
   } = apiSlice;

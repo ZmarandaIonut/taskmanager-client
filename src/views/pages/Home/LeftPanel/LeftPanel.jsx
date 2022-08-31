@@ -2,8 +2,6 @@ import React from 'react'
 import classes from "./LeftPanel.module.scss";
 
 const LeftPanel = ({user}) => {
-
-
   return (
     <div className={classes.mainPanel}>
         <div  className={classes.userSection}>
@@ -54,4 +52,4 @@ const LeftPanel = ({user}) => {
   )
 }
 
-export default LeftPanel
+export default LeftPanel;
