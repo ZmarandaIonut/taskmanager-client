@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../pages/Home/Home";
+import JoinBoard from "../pages/JoinBoard/JoinBoard";
 import Login from "../pages/Login/Login";
 import NotFound from "../pages/NotFound";
 import Register from "../pages/Register/Register";
@@ -19,6 +20,8 @@ const Router = () => {
           path="/resend-verify-email"
           element={<ResendVerifyEmail />}
         ></Route>
+
+        <Route path="/join-board" element={<JoinBoard/>}></Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
