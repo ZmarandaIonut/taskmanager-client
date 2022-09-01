@@ -32,7 +32,7 @@ $text-color: #666666;
 
 .boards{
     margin-top: 2.5rem;
-    margin-left: 1rem;
+    margin-left: 2rem;
     h2{
         color: $text-color;
         margin-bottom: 2rem;
@@ -42,6 +42,7 @@ $text-color: #666666;
 }
 .boardsContainer{
     text-align: center;
+    margin-left: 2rem;
     h3{
         color: $text-color;
         width: 100%;
@@ -50,6 +51,6 @@ $text-color: #666666;
     display: flex;
     flex-wrap: wrap;
     div{
-        margin: .5rem 1rem;
+        margin: 1rem 1.5rem;
     }
 }

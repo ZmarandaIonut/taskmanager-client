@@ -1,7 +1,8 @@
 import React from 'react'
 import classes from "./LeftPanel.module.scss";
-
+import { useNavigate } from 'react-router-dom';
 const LeftPanel = ({user}) => {
+  const navigate = useNavigate();
   return (
     <div className={classes.mainPanel}>
         <div  className={classes.userSection}>
@@ -13,9 +14,17 @@ const LeftPanel = ({user}) => {
             </div>
         </div>
         <div className={classes.navSection}>
+
+        <div className={classes.navListContainer}>
+             <div className={classes.shape}/>
+             <div onClick={() => navigate("/")}>
+                <p>Home</p>
+             </div>
+           </div>
+
            <div className={classes.navListContainer}>
              <div className={classes.shape}/>
-             <div>
+             <div onClick={() => navigate("/create-board")}>
                 <p>Create board</p>
              </div>
            </div>
