@@ -21,17 +21,16 @@ const LeftPanel = ({user}) => {
                 <p>Home</p>
              </div>
            </div>
-
-           <div className={classes.navListContainer}>
+          <div className={classes.navListContainer}>
              <div className={classes.shape}/>
              <div onClick={() => navigate("/create-board")}>
-                <p>Create board</p>
+                <p>Create Board</p>
              </div>
            </div>
 
            <div className={classes.navListContainer}>
              <div className={classes.shape}/>
-             <div>
+             <div onClick={() => navigate("/join-board")}>
                 <p>Join board</p>
              </div>
            </div>
