@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import classes from "./CenterPanel.module.scss";
-import { useGetUserBoardsQuery, useGetBoardsWhereUserIsMemberQuery } from '../../../../api/apiSlice';
+import { useGetUserBoardsQuery, useGetBoardsWhereUserIsMemberQuery} from '../../../../state/boards/api';
 import LoadingSpinner from '../../../utils/LoadingSpinner/LoadingSpinner';
 import Pagination from './components/Pagination';
 import Board from './components/Board/Board';

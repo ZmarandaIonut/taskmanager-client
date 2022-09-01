@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router';
-import { useLoginUserMutation } from '../../../api/apiSlice'
+import { useLoginUserMutation } from '../../../state/login/api';
 import emailImg from "../../resources/imgs/mail.png"
 import passwordImg from "../../resources/imgs/padlock.png"
 import mainPageShape from "../../resources/shapes/mainPageShape.png"
@@ -10,8 +10,9 @@ import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import LoadingSpinner from '../../utils/LoadingSpinner/LoadingSpinner';
-import { useDispatch, useSelector } from 'react-redux';
-import { addUser } from '../../../redux/slices/user';
+import { useDispatch} from 'react-redux';
+import { addUser } from '../../../state/user/user';
+
 const Login = () => {
 
   const [appError, setAppError] = useState();
@@ -22,7 +23,6 @@ const Login = () => {
   const {register, handleSubmit, formState: { errors }} = useForm({
     resolver: yupResolver(schema)
  });
-
  
  const [loginUser, {data:result, isSuccess, isLoading, isError, error}] = useLoginUserMutation();
 

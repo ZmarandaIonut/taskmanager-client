@@ -6,7 +6,7 @@ import passwordImg from "../../resources/imgs/padlock.png";
 import mainPageShape from "../../resources/shapes/mainPageShape.png";
 import classes from "./Register.module.scss";
 import reusable from "./../../resources/css/reusable.module.scss";
-import { useRegisterUserMutation } from "../../../api/apiSlice";
+import { useRegisterUserMutation } from "../../../state/register/api";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -30,8 +30,8 @@ const Register = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const [registerUser, { isSuccess, isLoading, isError, error }] =
-    useRegisterUserMutation();
+  console.log(useRegisterUserMutation)
+  const [registerUser, { isSuccess, isLoading, isError, error }] = useRegisterUserMutation();
 
   const navigate = useNavigate();
 
