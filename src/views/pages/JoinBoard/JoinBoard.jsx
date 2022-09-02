@@ -16,6 +16,7 @@ import LeftPanel from "../Home/LeftPanel/LeftPanel";
 const JoinBoard = () => {
   const { user } = useSelector((state) => state.user);
   const [appError, setAppError] = useState();
+  const [isUserAuth, setIsUserAuth] = useState();
   const navigate = useNavigate();
   const schema = yup.object().shape({
     Code: yup.string().required(),
@@ -36,6 +37,14 @@ const JoinBoard = () => {
     joinBoard(payload);
   };
   useEffect(() => {
+      if(Object.keys(user).length > 0){
+        setIsUserAuth(true);
+      }
+      else{
+        return navigate("/");
+      }
+  }, []);
+  useEffect(() => {
     if (isLoading) {
       setAppError("");
     }
@@ -52,6 +61,8 @@ const JoinBoard = () => {
       <div className={reusable.main_container_shape}>
         <img src={mainPageShape} />
       </div>
+     {isUserAuth && 
+     <>
       <LeftPanel user={user} />
       <div className={classes.container}>
           <div className={classes.panelContent}>
@@ -64,7 +75,7 @@ const JoinBoard = () => {
                   <input name="Code" placeholder="Code received" {...register("Code")} />
                 </div>
                 {errors.Code && (
-                  <p className={classes.val_error}>{errors.Code.message}</p>
+                  <p className={classes.valError}>{errors.Code.message}</p>
                 )}
                 {appError && (
                   <p className={reusable.form_response_error}>{appError}</p>
@@ -79,6 +90,7 @@ const JoinBoard = () => {
               </form>
             </div>
       </div>
+     </>}
     </div>
   );
 };

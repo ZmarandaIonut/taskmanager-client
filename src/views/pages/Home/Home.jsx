@@ -8,6 +8,7 @@ import LeftPanel from './LeftPanel/LeftPanel';
 import LoadingSpinner from '../../utils/LoadingSpinner/LoadingSpinner';
 import CenterPanel from './CenterPanel/CenterPanel';
 
+
 const Home = () => {
 
     const [isLoading, setIsLoading] = useState(true);

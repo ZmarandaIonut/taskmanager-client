@@ -15,22 +15,22 @@ const LeftPanel = ({user}) => {
         </div>
         <div className={classes.navSection}>
 
-        <div className={classes.navListContainer}>
+        <div className={classes.navListContainer} onClick={() => navigate("/")}>
              <div className={classes.shape}/>
-             <div onClick={() => navigate("/")}>
+             <div>
                 <p>Home</p>
              </div>
            </div>
-          <div className={classes.navListContainer}>
+          <div className={classes.navListContainer} onClick={() => navigate("/create-board")}>
              <div className={classes.shape}/>
-             <div onClick={() => navigate("/create-board")}>
+             <div>
                 <p>Create Board</p>
              </div>
            </div>
 
-           <div className={classes.navListContainer}>
+           <div className={classes.navListContainer} onClick={() => navigate("/join-board")}>
              <div className={classes.shape}/>
-             <div onClick={() => navigate("/join-board")}>
+             <div>
                 <p>Join board</p>
              </div>
            </div>
