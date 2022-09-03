@@ -4,6 +4,7 @@ import classes from "./Board.module.scss";
 import reusable from "../../resources/css/reusable.module.scss";
 import mainPageShape from "../../resources/shapes/mainPageShape.png";
 import LeftPanel from '../Home/LeftPanel/LeftPanel';
+import LoadingSpinner from "../../utils/LoadingSpinner/LoadingSpinner";
 import { useDispatch, useSelector } from 'react-redux';
 import {useLazyGetAuthUserQuery} from '../../../state/user/api';
 import { addUser } from '../../../state/user/user';
@@ -49,7 +50,12 @@ const Board = () => {
             <LeftPanel user={user}/>
             <div className={classes.container}>
                 <div className={classes.mainPanel}>
-                    {boardContent && boardContent.data.userRole === "Admin" && 
+                  {isBoardContentLoading ?                
+                    <div className={classes.loadingContent}>
+                       <LoadingSpinner/>
+                    </div> :
+                      <>
+                     {boardContent && boardContent.data.userRole === "Admin" && 
                     <>
                     <div className={classes.panelHeader}>
                         <div className={classes.inviteUserContainer}>
@@ -67,10 +73,11 @@ const Board = () => {
                     <div className={classes.statusesContainer}>
                       {boardContent && 
                       boardContent.data.statuses.map(statuses => {
-                      //  console.log(statuses)
-                        return <Status key={statuses.id} name={statuses.name} task = {statuses.tasks}/>
+                        return <Status key={statuses.id} name={statuses.name} tasks = {statuses.tasks}/>
                       })}
                     </div>
+                      </>
+                    }
                 </div>
             </div>
         </>}
