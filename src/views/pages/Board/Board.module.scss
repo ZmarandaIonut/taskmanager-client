@@ -1,0 +1,82 @@
+$mainColor: #F4F4F4;
+$secColor: #9189F8;
+$text-color: #666666;
+
+.mainContainer{
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    position: relative;
+}
+.container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.mainPanel{
+    width: 90%;
+    height: 90%;
+    max-width: 80rem;
+    max-height: 47rem;
+    background-color: $mainColor;
+    opacity: 0.94;
+    border-radius: 15px;
+    -webkit-box-shadow: -4px -1px 9px -1px rgba(0,0,0,0.56); 
+    box-shadow: -4px -1px 9px -1px rgba(0,0,0,0.56);
+    overflow: hidden;
+}
+.panelHeader{
+    display: flex;
+    border-bottom: 2px solid $text-color;
+}
+.inviteUserContainer{
+    display: flex;
+    align-items: center;
+    margin-left: 1.5rem;
+    p{
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: $text-color;
+    }
+    button{
+        margin-left: 1rem;
+        border: none;
+        background-color: rgb(154, 199, 88);
+        color: white;
+        font-weight: 600;
+        height: 50%;
+        width: 6rem;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+}
+.deleteBoardContainer{
+    margin-left: 3rem;
+    display: flex;
+    align-items: center;
+    p{
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: $text-color;
+    }
+    button{
+        margin-left: 1rem;
+        border: none;
+        background-color: rgb(201, 105, 105);
+        color: white;
+        font-weight: 600;
+        padding: .3rem 1.5rem;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+
+    }
+}
+.statusesContainer{
+    display: flex;
+    margin-top: 1.5rem;
+    margin-left: 1rem;
+}
