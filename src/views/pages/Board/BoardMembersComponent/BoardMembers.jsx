@@ -33,7 +33,7 @@ const BoardMembers = ({user, userRole, setDisplayBoardMembers}) => {
                     <div className={classes.memberComponent} key={member.user_id}>
                          <div className={classes.userNameContainer}>
                             <div className={classes.userIcon}>{member.name[0].toUpperCase()}</div>
-                            <p>{member.name}</p>
+                            {user.id === member.user_id ? <p>You</p> : <p>{member.name}</p>}
                          </div>
                          <div className={classes.userRoleContainer}>
                             <p className={classes.userRole}>{member.role}</p>

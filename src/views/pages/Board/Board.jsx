@@ -59,18 +59,18 @@ const Board = () => {
                        <LoadingSpinner/>
                     </div> :
                       <>
-                     {boardContent && boardContent.data.userRole === "Admin" && 
-                    <>
                     <div className={classes.panelHeader}>
+                     {boardContent && boardContent.data.userRole === "Admin" && 
                         <div className={classes.inviteUserContainer}>
                             <p>Invite user</p>
                             <button>Invite</button>
                         </div>  
-                        {boardContent.data.isBoardOwner && 
+                      }
+                        {boardContent && boardContent.data.isBoardOwner ?
                             <div className={classes.deleteBoardContainer}>
                                <p>Delete board</p>
                                <button>Delete</button>
-                            </div>
+                            </div> : null
                         }
                         <div className={classes.boardMembersContainer} onClick={() => setDisplayBoardMembers(true)}>
                             <p>Members</p>
@@ -79,13 +79,14 @@ const Board = () => {
                             </div>
                         </div>
                      </div>
-                    </>}
-                    <div className={classes.statusesContainer}>
-                      {boardContent && 
-                      boardContent.data.statuses.map(statuses => {
-                        return <Status key={statuses.id} name={statuses.name} tasks = {statuses.tasks}/>
-                      })}
-                    </div>
+                     {boardContent && boardContent.data.statuses.length === 0 ? <div className={classes.noContent}><h3>This board has no content</h3></div> : 
+                        <div className={classes.statusesContainer}>
+                            {boardContent && 
+                              boardContent.data.statuses.map(statuses => {
+                                  return <Status key={statuses.id} name={statuses.name} tasks = {statuses.tasks}/>
+                           })}
+                        </div>
+                     }
                       </>
                     }
                     {boardContent && displayBoardMembers && <BoardMembers user={user} userRole = {boardContent.data.userRole} setDisplayBoardMembers={setDisplayBoardMembers}/>}
