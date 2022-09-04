@@ -26,9 +26,11 @@ $text-color: #666666;
     -webkit-box-shadow: -4px -1px 9px -1px rgba(0,0,0,0.56); 
     box-shadow: -4px -1px 9px -1px rgba(0,0,0,0.56);
     overflow: hidden;
+    position: relative;
 }
 .panelHeader{
     display: flex;
+    align-items: center;
     border-bottom: 2px solid $text-color;
 }
 .inviteUserContainer{
@@ -86,4 +88,25 @@ $text-color: #666666;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.boardMembersContainer{
+    margin-left: auto;
+    margin-right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50%;
+    border-radius: 5px;
+    padding: 0 .5rem;
+    background-color: $secColor;
+    cursor: pointer;
+    p{
+        margin: 0;
+        font-weight: 600;
+        color: white;
+
+    }
+    div{
+        margin-left: .8rem;
+    }
 }

@@ -10,10 +10,14 @@ import {useLazyGetAuthUserQuery} from '../../../state/user/api';
 import { addUser } from '../../../state/user/user';
 import { useLazyGetBoardQuery } from '../../../state/getBoardContent/api';
 import Status from './StatusComponent/Status';
+import { FaUserFriends } from 'react-icons/fa';
+import BoardMembers from './BoardMembersComponent/BoardMembers';
 
 const Board = () => {
   const {slug} = useParams();
   const {user} = useSelector((state) => state.user);
+  const [displayBoardMembers, setDisplayBoardMembers] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -68,6 +72,12 @@ const Board = () => {
                                <button>Delete</button>
                             </div>
                         }
+                        <div className={classes.boardMembersContainer} onClick={() => setDisplayBoardMembers(true)}>
+                            <p>Members</p>
+                            <div>
+                                <FaUserFriends size={25}/>
+                            </div>
+                        </div>
                      </div>
                     </>}
                     <div className={classes.statusesContainer}>
@@ -78,6 +88,7 @@ const Board = () => {
                     </div>
                       </>
                     }
+                    {boardContent && displayBoardMembers && <BoardMembers user={user} userRole = {boardContent.data.userRole} setDisplayBoardMembers={setDisplayBoardMembers}/>}
                 </div>
             </div>
         </>}
