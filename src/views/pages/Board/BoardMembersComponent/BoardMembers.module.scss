@@ -14,7 +14,7 @@ $text-color: #666666;
 }
 .userBoardsContainer{
     position: relative;
-    width: 38rem;
+    width: 50rem;
     height: 35rem;
     border-radius: 10px;
     background-color: $mainColor;
@@ -58,7 +58,7 @@ $text-color: #666666;
     .userNameContainer{
         display: flex;
         align-items: center;
-        width: 20%;
+        width: 30%;
     }
     .userIcon{
         background-color: $secColor;
@@ -69,7 +69,7 @@ $text-color: #666666;
         font-weight: 600;
     }
     .userRoleContainer{
-        width: 50%;
+        width: 30%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -80,6 +80,13 @@ $text-color: #666666;
         }
     }
     .editRoleBtn{
+ 
+        margin-left: auto;
+        margin-right: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 10rem;
         button{
             margin: 0 .3rem;
             background-color: $text-color;

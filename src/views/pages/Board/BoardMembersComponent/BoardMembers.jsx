@@ -1,13 +1,17 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom';
+import { useChangeBoardMemberRoleMutation } from '../../../../state/changeBoardMemberRole/api';
 import { useGetBoardMembersQuery } from '../../../../state/getBoardMembers/api';
 import LoadingSpinner from '../../../utils/LoadingSpinner/LoadingSpinner';
 import classes from "./BoardMembers.module.scss";
 
-const BoardMembers = ({user, userRole, setDisplayBoardMembers}) => {
+const BoardMembers = ({boardID, user, userRole, setDisplayBoardMembers}) => {
    const {slug} = useParams();
    const [currentPage, setCurrentPage] = useState(1);
+   const [requestedChangeRole, setRequestedChangeRole] = useState();
    const {data: result, isLoading, isError, isFetching} = useGetBoardMembersQuery({slug, page: currentPage});
+
+   const [changeMemberRole, {isLoading: isChangeMemberRoleLoading, isSuccess: roleChanged, isError: errorRoleChange}] = useChangeBoardMemberRoleMutation();
 
    const nextPage = () => {
        setCurrentPage(page => page + 1);
@@ -15,6 +19,20 @@ const BoardMembers = ({user, userRole, setDisplayBoardMembers}) => {
    const prevPage = () => {
        setCurrentPage(page => page - 1);
    }
+   function changeBoardMemberRole(userID, role){
+        const payload = {
+            board_id: boardID,
+            user_id: userID,
+            role
+        }
+        changeMemberRole(payload);
+        setRequestedChangeRole(userID);
+   }
+   useEffect(() => {
+        if(roleChanged || errorRoleChange){
+            setRequestedChangeRole("");
+        }
+   }, [roleChanged, errorRoleChange]);
   return (
     <div className={classes.mainContainer}>
         <div className={classes.userBoardsContainer}>
@@ -32,15 +50,24 @@ const BoardMembers = ({user, userRole, setDisplayBoardMembers}) => {
                 return(
                     <div className={classes.memberComponent} key={member.user_id}>
                          <div className={classes.userNameContainer}>
-                            <div className={classes.userIcon}>{member.name[0].toUpperCase()}</div>
-                            {user.id === member.user_id ? <p>You</p> : <p>{member.name}</p>}
+                            <div className={classes.userIcon}>{member.email[0].toUpperCase()}</div>
+                            {user.id === member.user_id ? <p>You</p> : <p>{member.email}</p>}
                          </div>
                          <div className={classes.userRoleContainer}>
                             <p className={classes.userRole}>{member.role}</p>
                          </div>
                        {userRole === "Admin" && user.id !== member.user_id ?
                           <div className={classes.editRoleBtn}>
-                             {member.role === "Admin" ? <button>Set as Member</button> : <button>Set as Admin</button>}
+                           {isChangeMemberRoleLoading && member.user_id === requestedChangeRole ? <LoadingSpinner width={"1.5rem"} height={"1.5rem"}/> 
+                           :
+                           <>
+                            {member.role === "Admin" ? 
+                                <button onClick={() => changeBoardMemberRole(member.user_id, "Member")}>Set as Member</button>
+                                                                        :
+                                <button onClick={() => changeBoardMemberRole(member.user_id, "Admin")}>Set as Admin</button>
+                             }
+                           </>
+                           }
                          </div> : null}
                     </div>
                 )

@@ -92,7 +92,13 @@ const Board = () => {
                      }
                       </>
                     }
-                    {boardContent && displayBoardMembers && <BoardMembers user={user} userRole = {boardContent.data.userRole} setDisplayBoardMembers={setDisplayBoardMembers}/>}
+                    {boardContent && displayBoardMembers && <BoardMembers 
+                                                                  boardID={boardContent.data.board_id} 
+                                                                  user={user} 
+                                                                  userRole = {boardContent.data.userRole} 
+                                                                  setDisplayBoardMembers={setDisplayBoardMembers}
+                                                                  />
+                    }
                 </div>
             </div>
         </>}

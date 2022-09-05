@@ -6,6 +6,7 @@ export const boardMembers = api.injectEndpoints({
             query: ({slug, page}) => ({
                 url: `/get-board-members/${slug}?page=${page}`,
              }),
+             providesTags: ["BoardMembers"]
         }),
 	}),
 });
