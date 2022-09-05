@@ -12,6 +12,21 @@ $text-color: #666666;
     color: white;
     font-weight: 600;
     border-radius: 10px;
+    position: relative;
+
+    .deleteStatus{
+        position: absolute;
+        right: 4%;
+        margin-top: .5rem;
+        button{
+            background-color: rgb(194, 77, 77);
+            border: none;
+            color: white;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    }
 }
 .createTaskContainer{
     display: flex;

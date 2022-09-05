@@ -18,7 +18,7 @@ const CreateStatuses = ({boardID}) => {
   return (
     <div className={classes.mainContainer}>
         <input onChange={e => setInputValue(e.target.value)} placeholder='Enter a status name' value={inputValue}/>
-        {isLoading ? <LoadingSpinner width={"1.5rem"} height={"1.5rem"}/> : <button onClick={createBoardStatus}>✚</button>}
+        {isLoading ? <LoadingSpinner width={"1.3rem"} height={"1.3rem"}/> : <div className={classes.addStatusesContainer}><button onClick={createBoardStatus}>✚</button></div>}
     </div>
   )
 }

@@ -86,7 +86,12 @@ const Board = () => {
                         <div className={classes.statusesContainer}>
                             {boardContent && 
                               boardContent.data.statuses.map(statuses => {
-                                  return <Status key={statuses.id} statusID = {statuses.id} name={statuses.name} tasks = {statuses.tasks}/>
+                                  return <Status
+                                               key={statuses.id}
+                                               userRole = {boardContent.data.userRole}
+                                               statusID = {statuses.id}
+                                               name={statuses.name}
+                                               tasks = {statuses.tasks}/>
                            })}
                         </div>
                      }
