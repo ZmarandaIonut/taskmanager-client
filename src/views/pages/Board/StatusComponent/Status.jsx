@@ -6,14 +6,14 @@ const Status = ({name, tasks}) => {
   return (
     <div className={classes.statusComponent}>
         <p>{name}</p>
-        {tasks.length && 
+        {tasks.length ?
          <div className={classes.tasks}>
              {
                  tasks.map(task => {
                     return <Task key={task.id} name={task.name}/>
                 })
              }
-         </div>}
+         </div> : null}
         <div className={classes.createTaskContainer}>
             <p>Create task</p>
             <button>+</button>

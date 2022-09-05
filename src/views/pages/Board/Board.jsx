@@ -12,6 +12,7 @@ import { useLazyGetBoardQuery } from '../../../state/getBoardContent/api';
 import Status from './StatusComponent/Status';
 import { FaUserFriends } from 'react-icons/fa';
 import BoardMembers from './BoardMembersComponent/BoardMembers';
+import CreateStatuses from './CreateStatusesComponent/CreateStatuses';
 
 const Board = () => {
   const {slug} = useParams();
@@ -79,6 +80,7 @@ const Board = () => {
                             </div>
                         </div>
                      </div>
+                     {boardContent && boardContent.data.userRole === "Admin" ? <CreateStatuses boardID={boardContent.data.board_id}/> : null}
                      {boardContent && boardContent.data.statuses.length === 0 ? <div className={classes.noContent}><h3>This board has no content</h3></div> : 
                         <div className={classes.statusesContainer}>
                             {boardContent && 

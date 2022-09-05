@@ -6,6 +6,7 @@ export const board = api.injectEndpoints({
              query: (slug) => ({
                 url: `/board/${slug}`
              }),
+             providesTags: ["Statuses"]
          }),
 	}),
 });

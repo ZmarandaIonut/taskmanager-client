@@ -82,8 +82,13 @@ $text-color: #666666;
 .statusesContainer{
     display: flex;
     align-items:flex-start;
+ 
     margin-top: 1.5rem;
     margin-left: 1rem;
+    width: 95%;
+    height: 75%;
+    overflow: hidden;
+    overflow-x: auto;
 }
 .loadingContent{
     height: 100%;
