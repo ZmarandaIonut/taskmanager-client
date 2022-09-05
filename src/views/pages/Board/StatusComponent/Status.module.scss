@@ -21,14 +21,16 @@ $text-color: #666666;
     background-color: $mainColor;
     margin-top: 1.5rem;
     margin-bottom: 1rem;
-    width: 80%;
+    width: 85%;
     padding: 0.3rem 0;
-    p{
-        color: $text-color;
-        margin: 0;
+    input{
+        border: none;
+        background-color: $mainColor;
+    }
+    input:focus{
+        outline: none;
     }
     button{
-        margin-left: .5rem;
         width: 2.5rem;
         background-color: #8BC078;
         border: none;

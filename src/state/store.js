@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore} from "@reduxjs/toolkit";
 import userReducer from "./../state/user/user";
 import {api} from "./emptySplitApi";
 
