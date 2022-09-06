@@ -8,6 +8,7 @@ export const assignUser = api.injectEndpoints({
                 method: 'POST',
                 body: payload
             }),
+            invalidatesTags: ["assignedUsers"]
         }),
 	}),
 });

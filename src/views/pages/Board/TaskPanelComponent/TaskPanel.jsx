@@ -1,14 +1,19 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useAssignUserToTaskMutation } from '../../../../state/assignUserToTask/api';
+import { useGetTaskAssignedQuery } from '../../../../state/getTaskAssignedUsers/api';
 import { setPanelActive } from '../../../../state/Reducers/displayTaskPanel/displayTaskPanel';
+import LoadingSpinner from '../../../utils/LoadingSpinner/LoadingSpinner';
 import classes from "./TaskPanel.module.scss";
 
 const TaskPanel = ({boardID}) => {
     const dispatch = useDispatch();
     const {taskPanel} = useSelector((state) => state.taskPanel)
-    const [assignUserToTask, {data, isError, isSuccess, error}] = useAssignUserToTaskMutation();
     const [userEmail, setUserEmail] = useState();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [appError, setAppError] = useState();
+    const [assignUserToTask, {isLoading:isAssignedUserToTaskLoading, isError:assignUserError, error}] = useAssignUserToTaskMutation();
+    const {data: members, isLoading: isGetMembersLoading, isSuccess: isGetMembersSucces} = useGetTaskAssignedQuery({id: taskPanel.payload.taskID, page:currentPage});
     function closePanelTab(){
         dispatch(setPanelActive({
             isPanelActive: false,
@@ -16,6 +21,7 @@ const TaskPanel = ({boardID}) => {
         }))
     }
     function assignUser(){
+      setAppError("");
        const payload = {
          task_id: taskPanel.payload.taskID,
          board_id: boardID,
@@ -23,9 +29,24 @@ const TaskPanel = ({boardID}) => {
        }
        assignUserToTask(payload);
     }
+    const nextPage = () => {
+        setCurrentPage(page => page + 1);
+    }
+    const prevPage = () => {
+        setCurrentPage(page => page - 1);
+    }
+  useEffect(() => {
+    if(assignUserError){
+        if(error.data.message?.email){
+           return setAppError(error.data.message.email[0])     
+        }
+        return setAppError(error.data.message);
+ 
+    }
+  }, [assignUserError]);
   return (
     <div className={classes.mainContainer}>
-        {console.log(isSuccess, error)}
+        {console.log(currentPage)}
         <div className={classes.taskPanel}>
             <div className={classes.closeTab} onClick={closePanelTab}>
                 <button>✖</button>
@@ -35,11 +56,45 @@ const TaskPanel = ({boardID}) => {
             </div>
             <div className={classes.assignUserContainer}>
                     <input onChange={(e) => setUserEmail(e.target.value)} placeholder='Enter member board email'/>
-                    <button onClick={assignUser}>Assign</button>
+                    {isAssignedUserToTaskLoading ? 
+                      <div className={classes.assignUserLoading}>
+                         <LoadingSpinner width={"1.5rem"} height={"1.5rem"}/>
+                     </div>
+                                                 :
+                      <button onClick={assignUser}>Assign</button>
+                      }
             </div>
+            {appError && <p className={classes.appError}>{appError}</p>}
             <div className={classes.assignedUsersContainer}>
                 <h2>Assigned users</h2>
+                {members && members.data.users.length === 0 
+                                        ? 
+                        <div className={classes.noContent}><h4>Nothing to display</h4></div> 
+                                        :
+                <div className={classes.usersMainContainer}>
+                    {isGetMembersLoading ? <div className={classes.loading}><LoadingSpinner/></div> : 
+                    <>
+                    {members && members.data.users.map(user => {
+                       return <div className={classes.user} key={user.id}>
+                                <p>{user.email}</p>
+                                <div><p>Assigned</p></div>
+                              </div>
+                        })}
+                    </>
+                    }
+                </div>
+            }
             </div>
+                {members && members.data.users.length 
+                          && 
+                     <div className={classes.paginate}>
+                            <p>{members.data.currentPage}/{members.data.lastPage}</p>
+                           <div className={classes.paginateBtns}>
+                             {members.data.currentPage > 1 && <button onClick={prevPage}>Prev</button>}
+                             {members.data.lastPage > 1 && <button onClick={nextPage}>Next</button>}
+                            </div>
+                    </div>
+                }
         </div>
     </div>
   )
