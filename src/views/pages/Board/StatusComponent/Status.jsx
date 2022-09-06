@@ -32,7 +32,7 @@ const Status = ({statusID, userRole, name, tasks}) => {
          <div className={classes.tasks}>
              {
                  tasks.map(task => {
-                    return <Task key={task.id} name={task.name}/>
+                    return <Task key={task.id} taskID={task.id} name={task.name}/>
                 })
              }
          </div> : null}

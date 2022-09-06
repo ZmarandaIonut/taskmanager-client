@@ -2,6 +2,7 @@ $mainColor: #F4F4F4;
 $text-color: #666666;
 
 .taskContainer{
+    position: relative;
     background-color: $mainColor;
     color: $text-color;
     display: flex;
@@ -9,4 +10,25 @@ $text-color: #666666;
     justify-content: center;
     margin: 1rem 0;
     border-radius: 10px;
+    padding: 1rem;
+    flex-direction: column;
+}
+.openTaskPanel{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    margin-top: .5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    button{
+        text-align: center;
+        font-weight: 600;
+        background-color: #7a7a92e1;
+        border: none;
+        color: white;
+        border-radius: 5px;
+        padding: 0.15rem .5rem;
+        cursor: pointer;
+    }
 }

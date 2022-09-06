@@ -8,11 +8,13 @@ import LoadingSpinner from "../../utils/LoadingSpinner/LoadingSpinner";
 import { useDispatch, useSelector } from 'react-redux';
 import {useLazyGetAuthUserQuery} from '../../../state/user/api';
 import { addUser } from '../../../state/user/user';
-import { useLazyGetBoardQuery } from '../../../state/getBoardContent/api';
+import { board, useLazyGetBoardQuery } from '../../../state/getBoardContent/api';
 import Status from './StatusComponent/Status';
 import { FaUserFriends } from 'react-icons/fa';
 import BoardMembers from './BoardMembersComponent/BoardMembers';
 import CreateStatuses from './CreateStatusesComponent/CreateStatuses';
+import TaskPanel from './TaskPanelComponent/TaskPanel';
+import { setPanelActive } from '../../../state/Reducers/displayTaskPanel/displayTaskPanel';
 
 const Board = () => {
   const {slug} = useParams();
@@ -24,6 +26,8 @@ const Board = () => {
 
   const [trigger, {isLoading, data:result, isError, isSuccess}] = useLazyGetAuthUserQuery();
   const [getBoardContent, {data: boardContent, isLoading: isBoardContentLoading, isError: getBoardContentError}] = useLazyGetBoardQuery();
+ 
+  const {taskPanel} = useSelector((state) => state.taskPanel);
 
   useEffect(() => {
     if(Object.keys(user).length === 0){
@@ -44,6 +48,12 @@ const Board = () => {
   useEffect(() => {
       if(getBoardContentError){
         return navigate("/");
+      }
+      if(taskPanel.isPanelActive){
+        dispatch(setPanelActive({
+          isPanelActive: false,
+          payload: {}
+        }))
       }
   }, [getBoardContentError, boardContent]);
   return (
@@ -104,6 +114,8 @@ const Board = () => {
                                                                   setDisplayBoardMembers={setDisplayBoardMembers}
                                                                   />
                     }
+                    {console.log(taskPanel)}
+                 {boardContent && taskPanel.isPanelActive && <TaskPanel boardID = {boardContent.data.board_id}/>}
                 </div>
             </div>
         </>}
