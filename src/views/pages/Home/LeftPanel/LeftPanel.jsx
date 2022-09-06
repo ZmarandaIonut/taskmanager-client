@@ -10,7 +10,7 @@ const LeftPanel = ({user}) => {
                 <p>{user.name[0].toUpperCase()}</p>
             </div>
             <div>
-              <p>{user.name}e</p>
+              <p>{user.name}</p>
             </div>
         </div>
         <div className={classes.navSection}>
@@ -35,21 +35,14 @@ const LeftPanel = ({user}) => {
              </div>
            </div>
 
-           <div className={classes.navListContainer}>
+           <div className={classes.navListContainer} onClick={() => navigate("/archive")}>
              <div className={classes.shape}/>
              <div>
-                <p>Archived boards</p>
+                <p>Archive</p>
              </div>
            </div>
 
-           <div className={classes.navListContainer}>
-             <div className={classes.shape}/>
-             <div>
-                <p>Archived tasks</p>
-             </div>
-           </div>
-
-           <div className={classes.navListContainer}>
+           <div className={classes.navListContainer} onClick={()=>{sessionStorage.clear("token"); navigate("/login")}}>
              <div className={classes.shape}/>
              <div>
                 <p>Log out</p>

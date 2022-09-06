@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Archive from "../pages/Archive";
 import Board from "../pages/Board/Board";
 import CreateBoards from "../pages/CreateBoard/CreateBoards";
 import Home from "../pages/Home/Home";
@@ -27,6 +28,7 @@ const Router = () => {
 
         <Route path="/join-board" element={<JoinBoard/>}></Route>
         <Route path="/board/:slug" element={<Board/>}/>
+        <Route path="/archive" element={<Archive/>}></Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
