@@ -6,6 +6,10 @@ export const boards = api.injectEndpoints({
              query: (page = 1) => `/get-user-boards?page=${page}`,
              providesTags: ["Samples"]
          }),
+         getUserArchivedBoards: builder.query({
+            query: (page = 1) => `/get-user-archived-boards?page=${page}`,
+            providesTags: ["Samples"]
+        }),
          getBoardsWhereUserIsMember: builder.query({
              query: (page = 1) => `/get-joined-boards?page=${page}`
         }),
@@ -20,4 +24,4 @@ export const boards = api.injectEndpoints({
 	}),
 });
 
-export const {useGetUserBoardsQuery, useGetBoardsWhereUserIsMemberQuery, useCreateBoardMutation} = boards;
+export const {useGetUserBoardsQuery, useGetUserArchivedBoardsQuery, useGetBoardsWhereUserIsMemberQuery, useCreateBoardMutation} = boards;
