@@ -9,6 +9,7 @@ const BoardMembers = ({boardID, user, userRole, setDisplayBoardMembers}) => {
    const {slug} = useParams();
    const [currentPage, setCurrentPage] = useState(1);
    const [requestedChangeRole, setRequestedChangeRole] = useState();
+   const [sendInviteMsg, setSendInviteMsg] = useState();
    const {data: result, isLoading, isError, isFetching} = useGetBoardMembersQuery({slug, page: currentPage});
 
    const [changeMemberRole, {isLoading: isChangeMemberRoleLoading, isSuccess: roleChanged, isError: errorRoleChange}] = useChangeBoardMemberRoleMutation();
@@ -33,12 +34,14 @@ const BoardMembers = ({boardID, user, userRole, setDisplayBoardMembers}) => {
             setRequestedChangeRole("");
         }
    }, [roleChanged, errorRoleChange]);
+
   return (
     <div className={classes.mainContainer}>
         <div className={classes.userBoardsContainer}>
             <div className={classes.closeTab} onClick={() => setDisplayBoardMembers(false)}>
                 <button>✖</button>
             </div>
+            {sendInviteMsg && <div className={classes.boardInviteMsg}><p>{sendInviteMsg}</p></div>}
             <div className={classes.panelTitle}>
                <h2>Board members</h2>
             </div>

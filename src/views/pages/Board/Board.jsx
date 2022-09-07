@@ -15,6 +15,8 @@ import BoardMembers from './BoardMembersComponent/BoardMembers';
 import CreateStatuses from './CreateStatusesComponent/CreateStatuses';
 import TaskPanel from './TaskPanelComponent/TaskPanel';
 import { setPanelActive } from '../../../state/Reducers/displayTaskPanel/displayTaskPanel';
+import BoardInviteMembersPanel from './BoardInviteMembersPanel/BoardInviteMembersPanel';
+import { setBoardInvitePanelActive } from '../../../state/Reducers/displayInviteUserPanel/displayInviteUserPanel';
 
 const Board = () => {
   const {slug} = useParams();
@@ -28,6 +30,7 @@ const Board = () => {
   const [getBoardContent, {data: boardContent, isLoading: isBoardContentLoading, isError: getBoardContentError}] = useLazyGetBoardQuery();
  
   const {taskPanel} = useSelector((state) => state.taskPanel);
+  const {inviteBoardMembers} = useSelector((state) => state.inviteBoardMembers);
 
   useEffect(() => {
     if(Object.keys(user).length === 0){
@@ -55,9 +58,13 @@ const Board = () => {
           payload: {}
         }))
       }
+      if(inviteBoardMembers.isPanelActive){
+        dispatch(setBoardInvitePanelActive({isPanelActive: false}))
+      }
   }, [getBoardContentError, boardContent]);
   return (
     <div className={classes.mainContainer}>
+      {console.log(inviteBoardMembers)}
         {Object.keys(user).length && 
         <>
             <div className={reusable.main_container_shape}>
@@ -75,7 +82,7 @@ const Board = () => {
                      {boardContent && boardContent.data.userRole === "Admin" && 
                         <div className={classes.inviteUserContainer}>
                             <p>Invite user</p>
-                            <button>Invite</button>
+                            <button onClick={() => dispatch(setBoardInvitePanelActive({isPanelActive: true}))}>Invite</button>
                         </div>  
                       }
                         {boardContent && boardContent.data.isBoardOwner ?
@@ -118,6 +125,8 @@ const Board = () => {
                                                                   boardID = {boardContent.data.board_id}
                                                                   userRole = {boardContent.data.userRole}
                                                                   />}
+
+                {boardContent && inviteBoardMembers.isPanelActive && <BoardInviteMembersPanel boardID = {boardContent.data.board_id}/>}
                 </div>
             </div>
         </>}

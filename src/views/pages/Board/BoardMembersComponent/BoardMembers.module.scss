@@ -15,7 +15,7 @@ $text-color: #666666;
 .userBoardsContainer{
     position: relative;
     width: 50rem;
-    height: 35rem;
+    height: 36rem;
     border-radius: 10px;
     background-color: $mainColor;
     display: flex;
@@ -23,7 +23,7 @@ $text-color: #666666;
     align-items: center;
     color: white;
     .panelTitle{
-        margin-top: 1rem;
+        margin-top: 2.5rem;
         border-bottom: 2px solid $text-color;
         height: 4rem;
         width: 50%;
