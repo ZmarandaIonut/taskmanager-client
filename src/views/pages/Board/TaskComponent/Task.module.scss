@@ -50,3 +50,15 @@ $text-color: #666666;
         background-color: #7e7e7e;
     }
 }
+.deleteTask{
+    position: absolute;
+    top: 15%;
+    right: 10%;
+    button{
+        background-color: rgb(194, 77, 77);
+        border: none;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+}

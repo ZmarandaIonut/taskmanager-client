@@ -18,6 +18,7 @@ const Task = ({taskID,name, isActive}) => {
         <div className={classes.openTaskPanel}>
             <button onClick={displayTaskPanel}><TbSettings size={"15px"}/></button>
        </div>
+ 
     </div>
   )
 }

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useAssignUserToTaskMutation } from '../../../../state/assignUserToTask/api';
 import { useChangeTaskStatusMutation } from '../../../../state/ChangeTaskStatus/api';
+import { useDeleteTaskMutation } from '../../../../state/deleteTask/api';
 import { useGetTaskAssignedQuery } from '../../../../state/getTaskAssignedUsers/api';
 import { setPanelActive } from '../../../../state/Reducers/displayTaskPanel/displayTaskPanel';
 import LoadingSpinner from '../../../utils/LoadingSpinner/LoadingSpinner';
@@ -17,6 +18,7 @@ const TaskPanel = ({boardID, userRole}) => {
     const [assignUserToTask, {isLoading:isAssignedUserToTaskLoading, isError:assignUserError, error}] = useAssignUserToTaskMutation();
     const {data: members, isLoading: isGetMembersLoading, isSuccess: isGetMembersSucces} = useGetTaskAssignedQuery({id: taskPanel.payload.taskID, page:currentPage});
     const [setTaskStatus, {isLoading: isChangeTaskStatusLoading, isSuccess: isStatusChanged}] = useChangeTaskStatusMutation();
+    const [deleteTaskMut, {isLoading: isTaskDeleteLoading}] = useDeleteTaskMutation();
     function closePanelTab(){
         dispatch(setPanelActive({
             isPanelActive: false,
@@ -46,6 +48,9 @@ const TaskPanel = ({boardID, userRole}) => {
         }
         setTaskStatus(payload);
    }
+   const deleteTask = () => {
+     deleteTaskMut(taskPanel.payload.taskID);
+   }    
    useEffect(() => {
         if(isGetMembersSucces && userRole !== "Admin"){
             setUserCanChangeTaskStatus(members.data.isCurrentUserAssigned);
@@ -83,6 +88,10 @@ const TaskPanel = ({boardID, userRole}) => {
                         }
                     </>}
                 </div>
+                  {userRole === "Admin" && 
+                    <div className={classes.delete}>
+                          {isTaskDeleteLoading ? <LoadingSpinner width={"1.5rem"} height={"1.5rem"}/> : <button onClick={deleteTask}>Delete Task</button>}
+                     </div>}
             </div>
             <div className={classes.panelHeader}>
                 <h2>Task Panel</h2>

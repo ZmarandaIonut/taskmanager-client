@@ -14,7 +14,7 @@ $text-color: #666666;
 }
 .taskPanel{
     position: relative;
-    width: 55rem;
+    width: 60rem;
     height: 40rem;
     border-radius: 10px;
     background-color: $mainColor;
@@ -89,12 +89,11 @@ $text-color: #666666;
     color: white;
     position: absolute;
     left: 2%;
-    top: 5%;
- 
- 
+    top: 2%;
+    background-color: #dadada;
+    height: 3rem;
+    border-radius: 5px;
     text-align: center;
- 
- 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -109,6 +108,10 @@ $text-color: #666666;
         align-items: center;
         justify-content: center;
         border-radius: 5px;
+        margin-left: .5rem;
+    }
+    button{
+        margin: .5rem;
     }
     .taskStatusButtons{
         margin-left: .5rem;
@@ -188,4 +191,30 @@ $text-color: #666666;
     align-items: center;
     justify-content: center;
     font-weight: 600;
+}
+.delete{
+    button{
+        background-color: rgb(194, 77, 77);
+        border: none;
+        padding: .5rem 1rem;
+        font-weight: 600;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-left: .5rem;
+    }
+}
+.deleteTask{
+    position: absolute;
+    top: 13%;
+    left: 4%;
+    button{
+        background-color: rgb(194, 77, 77);
+        border: none;
+        padding: .5rem 1rem;
+        font-weight: 600;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+    }
 }

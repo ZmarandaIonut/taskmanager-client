@@ -36,11 +36,11 @@ const Status = ({statusID, userRole, name, tasks}) => {
                 })
              }
          </div> : null}
-          {userRole === "Admin" &&
+
                   <div className={classes.createTaskContainer}>
                     <input onChange={e => setInputValue(e.target.value)} value={inputValue} placeholder='Enter a task name'/>
                     {isLoading ? <LoadingSpinner width={"1.5rem"} height={"1.5rem"}/> : <button onClick={createNewTask}>✚</button>}
-                   </div>}
+                   </div>
     </div>
   )
 }
