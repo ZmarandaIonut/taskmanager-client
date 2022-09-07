@@ -1,8 +1,13 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import classes from "./LeftPanel.module.scss";
 import { useNavigate } from 'react-router-dom';
+
 const LeftPanel = ({user}) => {
   const navigate = useNavigate();
+  const logOut = () => {
+    sessionStorage.removeItem("token");
+    return window.location.replace("/login");
+  }
   return (
     <div className={classes.mainPanel}>
         <div  className={classes.userSection}>
@@ -10,7 +15,7 @@ const LeftPanel = ({user}) => {
                 <p>{user.name[0].toUpperCase()}</p>
             </div>
             <div>
-              <p>{user.name}</p>
+               <p>{user.name}</p>
             </div>
         </div>
         <div className={classes.navSection}>
@@ -42,7 +47,7 @@ const LeftPanel = ({user}) => {
              </div>
            </div>
 
-           <div className={classes.navListContainer} onClick={()=>{sessionStorage.clear("token"); navigate("/login")}}>
+           <div className={classes.navListContainer} onClick={logOut}>
              <div className={classes.shape}/>
              <div>
                 <p>Log out</p>

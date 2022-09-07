@@ -17,6 +17,7 @@ import TaskPanel from './TaskPanelComponent/TaskPanel';
 import { setPanelActive } from '../../../state/Reducers/displayTaskPanel/displayTaskPanel';
 import BoardInviteMembersPanel from './BoardInviteMembersPanel/BoardInviteMembersPanel';
 import { setBoardInvitePanelActive } from '../../../state/Reducers/displayInviteUserPanel/displayInviteUserPanel';
+import { useDeleteUserBoardMutation } from '../../../state/deleteBoard/api';
 
 const Board = () => {
   const {slug} = useParams();
@@ -28,7 +29,7 @@ const Board = () => {
 
   const [trigger, {isLoading, data:result, isError, isSuccess}] = useLazyGetAuthUserQuery();
   const [getBoardContent, {data: boardContent, isLoading: isBoardContentLoading, isError: getBoardContentError}] = useLazyGetBoardQuery();
- 
+  const [deleteBoardMut, {isSuccess: hasBoardDeleted}] = useDeleteUserBoardMutation();
   const {taskPanel} = useSelector((state) => state.taskPanel);
   const {inviteBoardMembers} = useSelector((state) => state.inviteBoardMembers);
 
@@ -62,9 +63,16 @@ const Board = () => {
         dispatch(setBoardInvitePanelActive({isPanelActive: false}))
       }
   }, [getBoardContentError, boardContent]);
+  useEffect(() => {
+      if(hasBoardDeleted){
+        return navigate("/");
+      }
+  }, [hasBoardDeleted]);
+  const deleteBoard = () => {
+     deleteBoardMut(boardContent.data.board_id);
+  }
   return (
     <div className={classes.mainContainer}>
-      {console.log(inviteBoardMembers)}
         {Object.keys(user).length && 
         <>
             <div className={reusable.main_container_shape}>
@@ -88,7 +96,7 @@ const Board = () => {
                         {boardContent && boardContent.data.isBoardOwner ?
                             <div className={classes.deleteBoardContainer}>
                                <p>Delete board</p>
-                               <button>Delete</button>
+                               <button onClick={deleteBoard}>Delete</button>
                             </div> : null
                         }
                         <div className={classes.boardMembersContainer} onClick={() => setDisplayBoardMembers(true)}>
