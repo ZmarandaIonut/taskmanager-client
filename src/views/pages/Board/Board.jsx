@@ -114,8 +114,10 @@ const Board = () => {
                                                                   setDisplayBoardMembers={setDisplayBoardMembers}
                                                                   />
                     }
-                    {console.log(taskPanel)}
-                 {boardContent && taskPanel.isPanelActive && <TaskPanel boardID = {boardContent.data.board_id}/>}
+                 {boardContent && taskPanel.isPanelActive && <TaskPanel
+                                                                  boardID = {boardContent.data.board_id}
+                                                                  userRole = {boardContent.data.userRole}
+                                                                  />}
                 </div>
             </div>
         </>}

@@ -32,14 +32,15 @@ const Status = ({statusID, userRole, name, tasks}) => {
          <div className={classes.tasks}>
              {
                  tasks.map(task => {
-                    return <Task key={task.id} taskID={task.id} name={task.name}/>
+                    return <Task key={task.id} taskID={task.id} name={task.name} isActive={task.isActive}/>
                 })
              }
          </div> : null}
-        <div className={classes.createTaskContainer}>
-            <input onChange={e => setInputValue(e.target.value)} value={inputValue} placeholder='Enter a task name'/>
-            {isLoading ? <LoadingSpinner width={"1.5rem"} height={"1.5rem"}/> : <button onClick={createNewTask}>✚</button>}
-        </div>
+          {userRole === "Admin" &&
+                  <div className={classes.createTaskContainer}>
+                    <input onChange={e => setInputValue(e.target.value)} value={inputValue} placeholder='Enter a task name'/>
+                    {isLoading ? <LoadingSpinner width={"1.5rem"} height={"1.5rem"}/> : <button onClick={createNewTask}>✚</button>}
+                   </div>}
     </div>
   )
 }

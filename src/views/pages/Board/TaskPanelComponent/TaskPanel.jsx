@@ -1,19 +1,22 @@
 import React, {useState, useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useAssignUserToTaskMutation } from '../../../../state/assignUserToTask/api';
+import { useChangeTaskStatusMutation } from '../../../../state/ChangeTaskStatus/api';
 import { useGetTaskAssignedQuery } from '../../../../state/getTaskAssignedUsers/api';
 import { setPanelActive } from '../../../../state/Reducers/displayTaskPanel/displayTaskPanel';
 import LoadingSpinner from '../../../utils/LoadingSpinner/LoadingSpinner';
 import classes from "./TaskPanel.module.scss";
 
-const TaskPanel = ({boardID}) => {
+const TaskPanel = ({boardID, userRole}) => {
     const dispatch = useDispatch();
     const {taskPanel} = useSelector((state) => state.taskPanel)
     const [userEmail, setUserEmail] = useState();
     const [currentPage, setCurrentPage] = useState(1);
+    const [canUserChangeTaskStatus, setUserCanChangeTaskStatus] = useState(userRole === "Admin" ? true : false);
     const [appError, setAppError] = useState();
     const [assignUserToTask, {isLoading:isAssignedUserToTaskLoading, isError:assignUserError, error}] = useAssignUserToTaskMutation();
     const {data: members, isLoading: isGetMembersLoading, isSuccess: isGetMembersSucces} = useGetTaskAssignedQuery({id: taskPanel.payload.taskID, page:currentPage});
+    const [setTaskStatus, {isLoading: isChangeTaskStatusLoading, isSuccess: isStatusChanged}] = useChangeTaskStatusMutation();
     function closePanelTab(){
         dispatch(setPanelActive({
             isPanelActive: false,
@@ -35,6 +38,19 @@ const TaskPanel = ({boardID}) => {
     const prevPage = () => {
         setCurrentPage(page => page - 1);
     }
+   const changeTaskStatus = (newstatus) => {
+        const payload = {
+            board_id: boardID,
+            task_id: taskPanel.payload.taskID,
+            status: newstatus
+        }
+        setTaskStatus(payload);
+   }
+   useEffect(() => {
+        if(isGetMembersSucces && userRole !== "Admin"){
+            setUserCanChangeTaskStatus(members.data.isCurrentUserAssigned);
+        }
+   }, [isGetMembersSucces])
   useEffect(() => {
     if(assignUserError){
         if(error.data.message?.email){
@@ -46,10 +62,27 @@ const TaskPanel = ({boardID}) => {
   }, [assignUserError]);
   return (
     <div className={classes.mainContainer}>
-        {console.log(currentPage)}
         <div className={classes.taskPanel}>
             <div className={classes.closeTab} onClick={closePanelTab}>
                 <button>✖</button>
+            </div>
+            <div className={classes.isTaskActiveContainer}>
+                <div className={classes.taskStatus}>
+                        {taskPanel.payload.isActive ? <p>Active</p> : <p>Completed</p>}
+                </div>
+                <div className={classes.taskStatusButtons}>
+                    {canUserChangeTaskStatus && 
+                          <>
+                            {isChangeTaskStatusLoading ? <LoadingSpinner width={"1.5rem"} height={"1.5rem"}/> : <>
+                            {taskPanel.payload.isActive ?
+                            <button onClick={() => changeTaskStatus(0)}>Mark as Inactive</button> 
+                                                        :
+                            <button onClick={() => changeTaskStatus(1)}>Mark as Active</button>
+                            }
+                          </>
+                        }
+                    </>}
+                </div>
             </div>
             <div className={classes.panelHeader}>
                 <h2>Task Panel</h2>
