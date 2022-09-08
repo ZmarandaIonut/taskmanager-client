@@ -30,8 +30,8 @@ const Board = () => {
 
   const [trigger, {isLoading, data:result, isError, isSuccess}] = useLazyGetAuthUserQuery();
   const [getBoardContent, {data: boardContent, isLoading: isBoardContentLoading, isError: getBoardContentError}] = useLazyGetBoardQuery();
-  const [deleteBoardMut, {isSuccess: hasBoardDeleted}] = useDeleteUserBoardMutation();
-  const [archiveBoard, {isSuccess: hasBoardArchived}] = useArchiveBoardMutation(); 
+  const [deleteBoardMut, {isSuccess: hasBoardDeleted, isLoading: isBoardDeleting}] = useDeleteUserBoardMutation();
+  const [archiveBoard, {isSuccess: hasBoardArchived, isLoading: isBoardArchiving}] = useArchiveBoardMutation(); 
   const {taskPanel} = useSelector((state) => state.taskPanel);
   const {inviteBoardMembers} = useSelector((state) => state.inviteBoardMembers);
 
@@ -109,19 +109,29 @@ const Board = () => {
                             {boardContent.data.isArchived ? 
                                 <div className={classes.unarchiveBoardContainer}>
                                     <p>Unarchive board</p>
-                                   <button onClick={archiveBoardForUser}>Unarchive</button>
+                                    {isBoardArchiving ? <div className={classes.panelHeaderLoadingButtons}><LoadingSpinner width={"1.5rem"} height={"1.5rem"}/></div>
+                                                    : 
+                                     <button onClick={archiveBoardForUser}>Unarchive</button>
+                                  }
+                                  
                                 </div>
                                                  :
                                <div className={classes.archiveBoardContainer}>
-                                  <p>Archive board</p>
-                                 <button onClick={archiveBoardForUser}>Archive</button>
+                                 <p>Archive board</p>
+                                 {isBoardArchiving ? <div className={classes.panelHeaderLoadingButtons}><LoadingSpinner width={"1.5rem"} height={"1.5rem"}/></div>
+                                                    : 
+                                      <button onClick={archiveBoardForUser}>Archive</button>
+                                  }
                               </div> 
     
                             }
  
                              <div className={classes.deleteBoardContainer}>
                                <p>Delete board</p>
-                               <button onClick={deleteBoard}>Delete</button>
+                               {isBoardDeleting ? <div className={classes.panelHeaderLoadingButtons}><LoadingSpinner width={"1.5rem"} height={"1.5rem"}/></div>
+                                                :
+                                <button onClick={deleteBoard}>Delete</button>
+                               }
                              </div>
                             </>
                             : null

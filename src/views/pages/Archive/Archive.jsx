@@ -107,11 +107,11 @@ const Archive = () => {
                     </>
                   )}
                 </div>
-                {result && result.data.lastPage > 1 ? (
+                {userArchivedTasks && userArchivedTasks.data.lastPage > 1 ? (
                   <Pagination
-                    currentPage={userBoardsPage}
-                    result={result}
-                    setPage={setUserBoardsPage}
+                    currentPage={archivedTasksPage}
+                    result={userArchivedTasks}
+                    setPage={setArchivedBoardsPage}
                   />
                 ) : null}
               </div>
