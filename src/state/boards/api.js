@@ -8,7 +8,7 @@ export const boards = api.injectEndpoints({
          }),
          getUserArchivedBoards: builder.query({
             query: (page = 1) => `/get-user-archived-boards?page=${page}`,
-            providesTags: ["Samples"]
+            providesTags: ["ArchivedBoards"]
         }),
          getBoardsWhereUserIsMember: builder.query({
              query: (page = 1) => `/get-joined-boards?page=${page}`

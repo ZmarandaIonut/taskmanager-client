@@ -79,6 +79,50 @@ $text-color: #666666;
 
     }
 }
+.archiveBoardContainer{
+    margin-left: 3rem;
+    display: flex;
+    align-items: center;
+    p{
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: $text-color;
+    }
+    button{
+        margin-left: 1rem;
+        border: none;
+        background-color: rgb(201, 105, 105);
+        color: white;
+        font-weight: 600;
+        padding: .3rem 1.5rem;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+
+    }
+}
+.unarchiveBoardContainer{
+    margin-left: 3rem;
+    display: flex;
+    align-items: center;
+    p{
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: $text-color;
+    }
+    button{
+        margin-left: 1rem;
+        border: none;
+        background-color: rgb(154, 199, 88);
+        color: white;
+        font-weight: 600;
+        padding: .3rem 1.5rem;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+
+    }
+}
 .statusesContainer{
     display: flex;
     align-items:flex-start;

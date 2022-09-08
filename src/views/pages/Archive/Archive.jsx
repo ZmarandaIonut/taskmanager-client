@@ -54,6 +54,8 @@ const Archive = () => {
         <img src={mainPageShape} />
       </div>
       {
+        isLoading ? <LoadingSpinner/>
+                   : 
         <>
           <LeftPanel user={user} />
           <div className={classes.container}>
@@ -88,19 +90,7 @@ const Archive = () => {
 
                 <h2>Tasks</h2>
                 <div className={classes.boardsContainer}>
-                  {isUserBoardsLoading ? (
-                    <LoadingSpinner />
-                  ) : (
-                    <>
-                      {result.data.boards.length ? (
-                        result.data.boards.map((board) => {
-                          return <Board key={board.id} board={board} />;
-                        })
-                      ) : (
                         <h3>Nothing to display</h3>
-                      )}
-                    </>
-                  )}
                 </div>
                 {result && result.data.lastPage > 1 ? (
                   <Pagination

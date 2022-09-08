@@ -18,6 +18,7 @@ import { setPanelActive } from '../../../state/Reducers/displayTaskPanel/display
 import BoardInviteMembersPanel from './BoardInviteMembersPanel/BoardInviteMembersPanel';
 import { setBoardInvitePanelActive } from '../../../state/Reducers/displayInviteUserPanel/displayInviteUserPanel';
 import { useDeleteUserBoardMutation } from '../../../state/deleteBoard/api';
+import { useArchiveBoardMutation } from '../../../state/archiveBoard/api';
 
 const Board = () => {
   const {slug} = useParams();
@@ -30,8 +31,16 @@ const Board = () => {
   const [trigger, {isLoading, data:result, isError, isSuccess}] = useLazyGetAuthUserQuery();
   const [getBoardContent, {data: boardContent, isLoading: isBoardContentLoading, isError: getBoardContentError}] = useLazyGetBoardQuery();
   const [deleteBoardMut, {isSuccess: hasBoardDeleted}] = useDeleteUserBoardMutation();
+  const [archiveBoard, {isSuccess: hasBoardArchived}] = useArchiveBoardMutation(); 
   const {taskPanel} = useSelector((state) => state.taskPanel);
   const {inviteBoardMembers} = useSelector((state) => state.inviteBoardMembers);
+
+  const deleteBoard = () => {
+    deleteBoardMut(boardContent.data.board_id);
+ }
+ const archiveBoardForUser = () => {
+    archiveBoard(boardContent.data.board_id);
+ }
 
   useEffect(() => {
     if(Object.keys(user).length === 0){
@@ -68,9 +77,11 @@ const Board = () => {
         return navigate("/");
       }
   }, [hasBoardDeleted]);
-  const deleteBoard = () => {
-     deleteBoardMut(boardContent.data.board_id);
-  }
+  useEffect(() => {
+      if(hasBoardArchived){
+        return navigate("/");
+      }
+  }, [hasBoardArchived])
   return (
     <div className={classes.mainContainer}>
         {Object.keys(user).length && 
@@ -94,10 +105,27 @@ const Board = () => {
                         </div>  
                       }
                         {boardContent && boardContent.data.isBoardOwner ?
-                            <div className={classes.deleteBoardContainer}>
+                            <>
+                            {boardContent.data.isArchived ? 
+                                <div className={classes.unarchiveBoardContainer}>
+                                    <p>Unarchive board</p>
+                                   <button onClick={archiveBoardForUser}>Unarchive</button>
+                                </div>
+                                                 :
+                               <div className={classes.archiveBoardContainer}>
+                                  <p>Archive board</p>
+                                 <button onClick={archiveBoardForUser}>Archive</button>
+                              </div> 
+    
+                            }
+ 
+                              {console.log(boardContent.data)}
+                             <div className={classes.deleteBoardContainer}>
                                <p>Delete board</p>
                                <button onClick={deleteBoard}>Delete</button>
-                            </div> : null
+                             </div>
+                            </>
+                            : null
                         }
                         <div className={classes.boardMembersContainer} onClick={() => setDisplayBoardMembers(true)}>
                             <p>Members</p>
