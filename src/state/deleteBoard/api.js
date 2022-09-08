@@ -7,7 +7,7 @@ export const deleteUserBoard = api.injectEndpoints({
                 url: `/delete-board/${id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: ["Samples"]
+            invalidatesTags: ["Samples", "ArchivedBoards"]
         }),
 	}),
 });

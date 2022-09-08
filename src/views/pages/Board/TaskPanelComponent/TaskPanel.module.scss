@@ -15,7 +15,7 @@ $text-color: #666666;
 .taskPanel{
     position: relative;
     width: 65rem;
-    height: 40rem;
+    height: 43rem;
     border-radius: 10px;
     background-color: $mainColor;
     display: flex;
@@ -86,17 +86,12 @@ $text-color: #666666;
     color: red;
 }
 .isTaskActiveContainer{
-    color: white;
-    position: absolute;
-    left: 2%;
-    top: 2%;
-    background-color: #dadada;
-    height: 3rem;
-    border-radius: 5px;
-    text-align: center;
     display: flex;
     align-items: center;
-    justify-content: center;
+    width: 98%;
+ 
+    margin-top: .5rem;
+    border-radius: 5px;
     p{
         font-weight: 600;
     }
@@ -124,6 +119,17 @@ $text-color: #666666;
             border-radius: 5px;
             cursor: pointer;
         }
+    }
+    .archiveTask{
+         button{
+            background-color: rgb(194, 77, 77);
+            padding: .5rem;
+            border: none;
+            color: white;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+         }
     }
 }
 .usersMainContainer{

@@ -119,7 +119,6 @@ const Board = () => {
     
                             }
  
-                              {console.log(boardContent.data)}
                              <div className={classes.deleteBoardContainer}>
                                <p>Delete board</p>
                                <button onClick={deleteBoard}>Delete</button>
@@ -160,6 +159,7 @@ const Board = () => {
                  {boardContent && taskPanel.isPanelActive && <TaskPanel
                                                                   boardID = {boardContent.data.board_id}
                                                                   userRole = {boardContent.data.userRole}
+                                                                  isBoardOwner = {boardContent.data.isBoardOwner}
                                                                   />}
 
                 {boardContent && inviteBoardMembers.isPanelActive && <BoardInviteMembersPanel boardID = {boardContent.data.board_id}/>}

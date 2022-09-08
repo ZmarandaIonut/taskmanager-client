@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { useArctiveTaskMutation } from '../../../../state/archiveTask/api';
 import { useAssignUserToTaskMutation } from '../../../../state/assignUserToTask/api';
 import { useChangeTaskStatusMutation } from '../../../../state/ChangeTaskStatus/api';
 import { useDeleteTaskMutation } from '../../../../state/deleteTask/api';
@@ -8,7 +9,7 @@ import { setPanelActive } from '../../../../state/Reducers/displayTaskPanel/disp
 import LoadingSpinner from '../../../utils/LoadingSpinner/LoadingSpinner';
 import classes from "./TaskPanel.module.scss";
 
-const TaskPanel = ({boardID, userRole}) => {
+const TaskPanel = ({boardID, userRole, isBoardOwner}) => {
     const dispatch = useDispatch();
     const {taskPanel} = useSelector((state) => state.taskPanel)
     const [userEmail, setUserEmail] = useState();
@@ -19,6 +20,7 @@ const TaskPanel = ({boardID, userRole}) => {
     const {data: members, isLoading: isGetMembersLoading, isSuccess: isGetMembersSucces} = useGetTaskAssignedQuery({id: taskPanel.payload.taskID, page:currentPage});
     const [setTaskStatus, {isLoading: isChangeTaskStatusLoading, isSuccess: isStatusChanged}] = useChangeTaskStatusMutation();
     const [deleteTaskMut, {isLoading: isTaskDeleteLoading}] = useDeleteTaskMutation();
+    const [archiveTask, {isLoading: isTaskArchiving}] = useArctiveTaskMutation();
     function closePanelTab(){
         dispatch(setPanelActive({
             isPanelActive: false,
@@ -51,6 +53,9 @@ const TaskPanel = ({boardID, userRole}) => {
    const deleteTask = () => {
      deleteTaskMut(taskPanel.payload.taskID);
    }    
+   const archiveTasKForUser = () => {
+      archiveTask(taskPanel.payload.taskID);
+   }
    useEffect(() => {
         if(isGetMembersSucces && userRole !== "Admin"){
             setUserCanChangeTaskStatus(members.data.isCurrentUserAssigned);
@@ -91,7 +96,11 @@ const TaskPanel = ({boardID, userRole}) => {
                   {userRole === "Admin" && 
                     <div className={classes.delete}>
                           {isTaskDeleteLoading ? <LoadingSpinner width={"1.5rem"} height={"1.5rem"}/> : <button onClick={deleteTask}>Delete Task</button>}
-                     </div>}
+                     </div>
+                  }
+                  {isBoardOwner ?  <div className={classes.archiveTask}>
+                    {isTaskArchiving ? <LoadingSpinner width={"1.5rem"} height={"1.5rem"}/> : <button onClick={archiveTasKForUser}>Archive task</button>}
+                  </div> : null}
             </div>
             <div className={classes.panelHeader}>
                 <h2>Task Panel</h2>

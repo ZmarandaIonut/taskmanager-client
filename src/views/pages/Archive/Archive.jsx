@@ -11,12 +11,15 @@ import Board from "../Home/CenterPanel/components/Board/Board";
 import Pagination from "../Home/CenterPanel/components/Pagination";
 import { useGetUserArchivedBoardsQuery } from "../../../state/boards/api";
 import { useNavigate } from "react-router-dom";
+import { useGetUserArchivedTasksQuery } from "../../../state/getUserArchivedTasks/api";
+import ArchiveTask from "./ArchiveTaskComponent";
 
 const Archive = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [userBoardsPage, setUserBoardsPage] = useState(1);
-  const { data: result, isLoading: isUserBoardsLoading } =
-    useGetUserArchivedBoardsQuery(userBoardsPage);
+  const [archivedTasksPage, setArchivedBoardsPage] = useState(1);
+  const { data: result, isLoading: isUserBoardsLoading } = useGetUserArchivedBoardsQuery(userBoardsPage);
+  const {data: userArchivedTasks, isLoading: isArchivedTasksLoading} = useGetUserArchivedTasksQuery(archivedTasksPage);
 
   const navigate = useNavigate;
   const { user } = useSelector((state) => state.user);
@@ -90,7 +93,19 @@ const Archive = () => {
 
                 <h2>Tasks</h2>
                 <div className={classes.boardsContainer}>
+                  {isArchivedTasksLoading ? (
+                    <LoadingSpinner />
+                  ) : (
+                    <>
+                      {userArchivedTasks && userArchivedTasks.data.tasks.length ? (
+                        userArchivedTasks.data.tasks.map((task) => {
+                          return <ArchiveTask key={task.id} name={task.name} taskID={task.id}/>;
+                        })
+                      ) : (
                         <h3>Nothing to display</h3>
+                      )}
+                    </>
+                  )}
                 </div>
                 {result && result.data.lastPage > 1 ? (
                   <Pagination
