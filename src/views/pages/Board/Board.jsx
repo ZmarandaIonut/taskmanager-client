@@ -84,6 +84,7 @@ const Board = () => {
   }, [hasBoardArchived])
   return (
     <div className={classes.mainContainer}>
+      {console.log(user)}
         {Object.keys(user).length && 
         <>
             <div className={reusable.main_container_shape}>
@@ -125,17 +126,19 @@ const Board = () => {
                               </div> 
     
                             }
- 
-                             <div className={classes.deleteBoardContainer}>
+
+                            </>
+                            : null
+                        }
+                         {boardContent && (boardContent.data.isBoardOwner || user.isSuperAdmin) ? 
+                          <div className={classes.deleteBoardContainer}>
                                <p>Delete board</p>
                                {isBoardDeleting ? <div className={classes.panelHeaderLoadingButtons}><LoadingSpinner width={"1.5rem"} height={"1.5rem"}/></div>
                                                 :
                                 <button onClick={deleteBoard}>Delete</button>
                                }
-                             </div>
-                            </>
-                            : null
-                        }
+                            </div> : null
+                          }
                         <div className={classes.boardMembersContainer} onClick={() => setDisplayBoardMembers(true)}>
                             <p>Members</p>
                             <div>
