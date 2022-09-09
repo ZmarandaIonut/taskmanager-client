@@ -82,7 +82,7 @@ $text-color: #666666;
     .editRoleBtn{
  
         margin-left: auto;
-        margin-right: 1rem;
+ 
         display: flex;
         align-items: center;
         justify-content: center;
@@ -100,6 +100,19 @@ $text-color: #666666;
     }
     border-bottom: 1px solid black;
     margin-bottom: 1rem;
+}
+.removeMember{
+    button{
+        margin: 0 .3rem;
+        background-color: rgb(194, 102, 102);
+        border: none;
+        color: white;
+        font-weight: 600;
+        padding: .5rem;
+        border-radius: 5px;
+        cursor: pointer;
+        
+    }
 }
 .loadingContainer{
     height: 100%;

@@ -11,7 +11,8 @@ export const boards = api.injectEndpoints({
             providesTags: ["ArchivedBoards"]
         }),
          getBoardsWhereUserIsMember: builder.query({
-             query: (page = 1) => `/get-joined-boards?page=${page}`
+             query: (page = 1) => `/get-joined-boards?page=${page}`,
+             providesTags: ["JoinedBoards"]
         }),
         createBoard: builder.mutation({
             query: (payload) => ({

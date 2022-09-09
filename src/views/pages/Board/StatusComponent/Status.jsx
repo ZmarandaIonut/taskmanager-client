@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import { useCreateNewTaskMutation } from '../../../../state/createNewTask/api';
 import { useDeleteBoardMutation } from '../../../../state/deleteBoardStatus/api';
 import LoadingSpinner from '../../../utils/LoadingSpinner/LoadingSpinner';
@@ -7,8 +7,8 @@ import classes from "./Status.module.scss";
 
 const Status = ({statusID, userRole, name, tasks}) => {
   const [inputValue, setInputValue] = useState("");
-  const [createTask, {data:result, isLoading, isSuccess}] = useCreateNewTaskMutation();
-  const [deleteBoardStatus, {isSuccess: hasDeleted, isLoading: isDeleting}] = useDeleteBoardMutation();
+  const [createTask, {isLoading}] = useCreateNewTaskMutation();
+  const [deleteBoardStatus, {isLoading: isDeleting}] = useDeleteBoardMutation();
 
   function createNewTask(){
       const payload = {
@@ -38,11 +38,10 @@ const Status = ({statusID, userRole, name, tasks}) => {
                 })
              }
          </div> : null}
-
-                  <div className={classes.createTaskContainer}>
-                    <input onChange={e => setInputValue(e.target.value)} value={inputValue} placeholder='Enter a task name'/>
-                    {isLoading ? <LoadingSpinner width={"1.5rem"} height={"1.5rem"}/> : <button onClick={createNewTask}>✚</button>}
-                   </div>
+            <div className={classes.createTaskContainer}>
+              <input disabled={userRole !== "Admin"} onChange={e => setInputValue(e.target.value)} value={inputValue} placeholder='Enter a task name'/>
+              {isLoading ? <LoadingSpinner width={"1.5rem"} height={"1.5rem"}/> : <button disabled={userRole !== "Admin"} onClick={createNewTask}>✚</button>}
+             </div>
     </div>
   )
 }

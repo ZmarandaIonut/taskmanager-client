@@ -7,7 +7,8 @@ export const joinBoard = api.injectEndpoints({
                 url: "/accept-board-invite",
                 method: "POST",
                 body: payload
-           })
+           }),
+           invalidatesTags: ["JoinedBoards"]
         }),
 	}),
 });

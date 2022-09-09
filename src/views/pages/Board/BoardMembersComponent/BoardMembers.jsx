@@ -2,18 +2,19 @@ import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom';
 import { useChangeBoardMemberRoleMutation } from '../../../../state/changeBoardMemberRole/api';
 import { useGetBoardMembersQuery } from '../../../../state/getBoardMembers/api';
+import { useRemoveMemberFromBoardMutation } from '../../../../state/removeBoardMember/api';
 import LoadingSpinner from '../../../utils/LoadingSpinner/LoadingSpinner';
 import classes from "./BoardMembers.module.scss";
 
 const BoardMembers = ({boardID, user, userRole, setDisplayBoardMembers}) => {
    const {slug} = useParams();
    const [currentPage, setCurrentPage] = useState(1);
-   const [requestedChangeRole, setRequestedChangeRole] = useState();
+   const [requestChange, setRequestChange] = useState();
    const [sendInviteMsg, setSendInviteMsg] = useState();
    const {data: result, isLoading, isError, isFetching} = useGetBoardMembersQuery({slug, page: currentPage});
 
    const [changeMemberRole, {isLoading: isChangeMemberRoleLoading, isSuccess: roleChanged, isError: errorRoleChange}] = useChangeBoardMemberRoleMutation();
-
+    const [removeMember, {isLoading: isRemovingUser, isSuccess: memberRemoved, isError: errorRemoveMember}] = useRemoveMemberFromBoardMutation();
    const nextPage = () => {
        setCurrentPage(page => page + 1);
    }
@@ -27,13 +28,23 @@ const BoardMembers = ({boardID, user, userRole, setDisplayBoardMembers}) => {
             role
         }
         changeMemberRole(payload);
-        setRequestedChangeRole(userID);
+        setRequestChange(userID);
+   }
+   function removeMemberFromBoard (userID) {
+      removeMember({id: boardID, member_id: userID});
+      setRequestChange(userID);
    }
    useEffect(() => {
         if(roleChanged || errorRoleChange){
-            setRequestedChangeRole("");
+            setRequestChange("");
         }
    }, [roleChanged, errorRoleChange]);
+
+   useEffect(() => {
+        if(memberRemoved || errorRemoveMember){
+            setRequestChange("");
+        }
+   }, [memberRemoved, errorRemoveMember])
 
   return (
     <div className={classes.mainContainer}>
@@ -61,7 +72,7 @@ const BoardMembers = ({boardID, user, userRole, setDisplayBoardMembers}) => {
                          </div>
                        {userRole === "Admin" && user.id !== member.user_id ?
                           <div className={classes.editRoleBtn}>
-                           {isChangeMemberRoleLoading && member.user_id === requestedChangeRole ? <LoadingSpinner width={"1.5rem"} height={"1.5rem"}/> 
+                           {isChangeMemberRoleLoading && member.user_id === requestChange ? <LoadingSpinner width={"1.5rem"} height={"1.5rem"}/> 
                            :
                            <>
                             {member.role === "Admin" ? 
@@ -72,6 +83,16 @@ const BoardMembers = ({boardID, user, userRole, setDisplayBoardMembers}) => {
                            </>
                            }
                          </div> : null}
+                         {
+                            userRole === "Admin" && user.id !== member.user_id ? 
+                            <div className={classes.removeMember}>
+                                {isRemovingUser && member.user_id === requestChange ?
+                                 <LoadingSpinner  width={"1.5rem"} height={"1.5rem"}/>
+                                                        :
+                                   <button onClick={() => removeMemberFromBoard(member.user_id)}>Remove</button>
+                                 }
+                            </div> : null
+                         }
                     </div>
                 )
             })}
