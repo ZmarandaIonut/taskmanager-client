@@ -49,7 +49,12 @@ const Register = () => {
       setAppError("");
     }
     if (isError) {
-      return setAppError(Object.values(error.data.errors)[0][0]);
+      if(typeof error.data.message == "string"){
+        return setAppError(error.data.message);
+      }
+      else{
+          return setAppError(Object.values(error.data.errors)[0][0]);
+      }
     }
     if (isSuccess) {
       return navigate("/verify-email");
