@@ -25,7 +25,7 @@ const BoardInviteMembersPanel = ({boardID}) => {
   }
   useEffect(() => {
     if(hasBoardInviteSended){
-        setSendInviteMsg("Invite send");
+        setSendInviteMsg("Invite sent");
     }
     if(sendBoardInviteError){
         if(typeof error.data.message == "object"){

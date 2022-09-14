@@ -5,6 +5,7 @@ import LoadingSpinner from '../../../utils/LoadingSpinner/LoadingSpinner';
 import Task from '../TaskComponent/Task';
 import classes from "./Status.module.scss";
 
+
 const Status = ({statusID, userRole, name, tasks}) => {
   const [inputValue, setInputValue] = useState("");
   const [createTask, {isLoading}] = useCreateNewTaskMutation();
@@ -28,6 +29,10 @@ const Status = ({statusID, userRole, name, tasks}) => {
                                     </div>
         }
         <p>{name}</p>
+        <div className={classes.createTaskContainer}>
+              <input disabled={userRole !== "Admin"} onChange={e => setInputValue(e.target.value)} value={inputValue} placeholder='Enter a task name'/>
+              {isLoading ? <LoadingSpinner width={"1.5rem"} height={"1.5rem"}/> : <button disabled={userRole !== "Admin"} onClick={createNewTask}>✚</button>}
+             </div>
         {tasks && tasks.length ?
          <div className={classes.tasks}>
              {
@@ -37,11 +42,7 @@ const Status = ({statusID, userRole, name, tasks}) => {
                     }
                 })
              }
-         </div> : null}
-            <div className={classes.createTaskContainer}>
-              <input disabled={userRole !== "Admin"} onChange={e => setInputValue(e.target.value)} value={inputValue} placeholder='Enter a task name'/>
-              {isLoading ? <LoadingSpinner width={"1.5rem"} height={"1.5rem"}/> : <button disabled={userRole !== "Admin"} onClick={createNewTask}>✚</button>}
-             </div>
+         </div> : null} 
     </div>
   )
 }

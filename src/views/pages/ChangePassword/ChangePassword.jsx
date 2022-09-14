@@ -1,23 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { useLoginUserMutation } from "../../../state/login/api";
 import emailImg from "../../resources/imgs/mail.png";
+import codeImg from "../../resources/imgs/smartphone.png";
 import passwordImg from "../../resources/imgs/padlock.png";
 import mainPageShape from "../../resources/shapes/mainPageShape.png";
+import classes from "./ChangePassword.module.scss";
 import reusable from "./../../resources/css/reusable.module.scss";
-import classes from "./Login.module.scss";
+import { useChangePasswordMutation } from "../../../state/changePassword/api";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import LoadingSpinner from "../../utils/LoadingSpinner/LoadingSpinner";
-import { useDispatch } from "react-redux";
-import { addUser } from "../../../state/user/user";
 
-const Login = () => {
+const ChangePassword = () => {
   const [appError, setAppError] = useState();
   const schema = yup.object().shape({
     Email: yup.string().email().required(),
+    Token: yup.string().required(),
     Password: yup.string().required(),
+    ConfirmPassword: yup
+      .string()
+      .required()
+      .oneOf([yup.ref("Password")]),
   });
   const {
     register,
@@ -26,43 +30,33 @@ const Login = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  const [loginUser, { data: result, isSuccess, isLoading, isError, error }] =
-    useLoginUserMutation();
-
-  const dispatch = useDispatch();
+  //console.log(useChangePasswordMutation);
+  const [changePassword, { isSuccess, isLoading, isError, error }] =
+    useChangePasswordMutation();
 
   const navigate = useNavigate();
 
   const submitForm = (data) => {
     const payload = {
       email: data.Email,
+      token: data.Token,
       password: data.Password,
+      password_confirmation: data.ConfirmPassword,
     };
-    loginUser(payload);
+    changePassword(payload);
   };
   useEffect(() => {
     if (isLoading) {
       setAppError("");
     }
     if (isError) {
-      return setAppError(error.data.message);
+      setAppError(error.data.message);
     }
     if (isSuccess) {
-      dispatch(addUser(result.data.user));
-      sessionStorage.setItem("token", result.data.token);
-      return navigate("/");
+      return navigate("/login");
     }
   }, [isError, isSuccess]);
-
-  const _forgotPassword = () => {
-    return navigate("/forgot-password");
-  };
-
-  const _register = () => {
-    return navigate("/register");
-  };
-
+  
   return (
     <div className={reusable.main_container}>
       <div className={reusable.main_container_shape}>
@@ -70,21 +64,25 @@ const Login = () => {
       </div>
       <div className={reusable.center_panel}>
         <div className={reusable.panelContent}>
-          <h1>Login</h1>
+          <h1>Change Password</h1>
           <form onSubmit={handleSubmit(submitForm)}>
             <div className={reusable.form_div}>
               <div className={reusable.form_img_container}>
                 <img alt="user" src={emailImg} width="20px" />
               </div>
-              <input
-                name="Email"
-                placeholder="Email"
-                {...register("Email")}
-                autoFocus={true}
-              />
+              <input name="Email" placeholder="Email" {...register("Email")} />
             </div>
             {errors.Email && (
               <p className={classes.val_error}>{errors.Email.message}</p>
+            )}
+            <div className={reusable.form_div}>
+              <div className={reusable.form_img_container}>
+                <img alt="mailImg" src={codeImg} width="20px" />
+              </div>
+              <input name="Token" placeholder="Code" {...register("Token")} />
+            </div>
+            {errors.Code && (
+              <p className={classes.val_error}>{errors.Code.message}</p>
             )}
             <div className={reusable.form_div}>
               <div className={reusable.form_img_container}>
@@ -97,9 +95,22 @@ const Login = () => {
                 {...register("Password")}
               />
             </div>
-            
             {errors.Password && (
               <p className={classes.val_error}>{errors.Password.message}</p>
+            )}
+            <div className={reusable.form_div}>
+              <div className={reusable.form_img_container}>
+                <img alt="user" src={passwordImg} width="20px" />
+              </div>
+              <input
+                type="password"
+                name="ConfirmPassword"
+                placeholder="Password confirmation"
+                {...register("ConfirmPassword")}
+              />
+            </div>
+            {errors.ConfirmPassword && (
+              <p className={classes.val_error}>Passwords must match</p>
             )}
             {appError && (
               <p className={reusable.form_response_error}>{appError}</p>
@@ -108,24 +119,14 @@ const Login = () => {
               <LoadingSpinner />
             ) : (
               <div className={reusable.form_btn_container}>
-                <button>Login</button>
-                
+                <button>Change</button>
               </div>
-              
             )}
-            <a className={classes.forgotPassword}>Forgot password?</a>
           </form>
-          <div className={reusable.form_anno}>
-          
-            <p>Don't have an account?</p>
-            <p onClick={_register}>
-              <strong>Register now!</strong>
-            </p>
-          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default ChangePassword;
