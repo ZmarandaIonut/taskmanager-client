@@ -79,6 +79,10 @@ $text-color: #666666;
         height: 23rem;
     }
 }
+.assignUserContainer:focus-within{
+    transition: .2s;
+    border: 1px solid rgb(26, 151, 26);
+} 
 .appError{
     margin: 0;
     color: $text-color;

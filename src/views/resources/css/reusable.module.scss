@@ -137,3 +137,15 @@ body{
     margin: 0;
 }
 /*--------------------------------------------*/
+
+@media only screen and (max-width: 600px) {
+     .center_panel{
+        transition: .2s;
+       width: 23rem;
+     }
+     .form_btn_container{
+        button{
+            padding: .7rem 1rem;
+        }
+     }
+}

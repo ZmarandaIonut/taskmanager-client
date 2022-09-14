@@ -8,7 +8,7 @@ import LoadingSpinner from "../../utils/LoadingSpinner/LoadingSpinner";
 import { useDispatch, useSelector } from 'react-redux';
 import {useLazyGetAuthUserQuery} from '../../../state/user/api';
 import { addUser } from '../../../state/user/user';
-import { board, useLazyGetBoardQuery } from '../../../state/getBoardContent/api';
+import {useLazyGetBoardQuery } from '../../../state/getBoardContent/api';
 import Status from './StatusComponent/Status';
 import { FaUserFriends } from 'react-icons/fa';
 import BoardMembers from './BoardMembersComponent/BoardMembers';
@@ -28,7 +28,7 @@ const Board = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [trigger, {isLoading, data:result, isError, isSuccess}] = useLazyGetAuthUserQuery();
+  const [trigger, {data:result, isError, isSuccess}] = useLazyGetAuthUserQuery();
   const [getBoardContent, {data: boardContent, isLoading: isBoardContentLoading, isError: getBoardContentError}] = useLazyGetBoardQuery();
   const [deleteBoardMut, {isSuccess: hasBoardDeleted, isLoading: isBoardDeleting}] = useDeleteUserBoardMutation();
   const [archiveBoard, {isSuccess: hasBoardArchived, isLoading: isBoardArchiving}] = useArchiveBoardMutation(); 
@@ -84,11 +84,10 @@ const Board = () => {
   }, [hasBoardArchived])
   return (
     <div className={classes.mainContainer}>
-      {console.log(user)}
         {Object.keys(user).length && 
         <>
             <div className={reusable.main_container_shape}>
-                <img src={mainPageShape}/>
+                <img alt="shape" src={mainPageShape}/>
             </div>
             <LeftPanel user={user}/>
             <div className={classes.container}>

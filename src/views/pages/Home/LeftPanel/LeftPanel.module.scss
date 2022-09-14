@@ -12,6 +12,7 @@ $secColor: #9189F8;
     -webkit-box-shadow: -4px -1px 9px -1px rgba(0,0,0,0.56); 
     box-shadow: -4px -1px 9px -1px rgba(0,0,0,0.56);
     font-weight: 600;
+    position: relative;
 }
 .userSection{
     display: flex;
@@ -49,4 +50,36 @@ $secColor: #9189F8;
     transition: 0.3s;
     transform: scale(1.05);
     background-color: #d4d4d4;
+}
+.notificationBellContainer{
+    position: absolute;
+    right: 7%;
+    top: 2%;
+    width: 3rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #97979747;
+    cursor: pointer;
+}
+.notificationBellContainer:hover{
+    background-color: #807f7f47;
+}
+.notify{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.bellNotification{
+    background-color: red;
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    position: absolute;
+    top: 10%;
+    left: 10%;
 }

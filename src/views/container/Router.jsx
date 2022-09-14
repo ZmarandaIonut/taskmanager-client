@@ -9,6 +9,7 @@ import Login from "../pages/Login/Login";
 import NotFound from "../pages/NotFound";
 import Register from "../pages/Register/Register";
 import ResendVerifyEmail from "../pages/ResendVerifyEmail";
+import UserNotification from "../pages/userNotifications";
 import VerifyEmail from "../pages/VerifyEmail/VerifyEmail";
 
 const Router = () => {
@@ -29,6 +30,7 @@ const Router = () => {
         <Route path="/join-board" element={<JoinBoard/>}></Route>
         <Route path="/board/:slug" element={<Board/>}/>
         <Route path="/archive" element={<Archive/>}></Route>
+        <Route path="/user-notifications" element={<UserNotification/>}></Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

@@ -9,9 +9,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import LoadingSpinner from "../../utils/LoadingSpinner/LoadingSpinner";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import LeftPanel from "../Home/LeftPanel/LeftPanel";
-//import { addUser } from "../../../redux/slices/user";
 
 const JoinBoard = () => {
   const { user } = useSelector((state) => state.user);
@@ -72,7 +71,7 @@ const JoinBoard = () => {
                   <div className={reusable.form_img_container}>
                     <img alt="codeImg" src={passImg} width="20px" />
                   </div>
-                  <input name="Code" placeholder="Code received" {...register("Code")} />
+                  <input autoFocus={true} name="Code" placeholder="Code received" {...register("Code")} />
                 </div>
                 {errors.Code && (
                   <p className={classes.valError}>{errors.Code.message}</p>

@@ -76,6 +76,10 @@ $text-color: #666666;
                 background-color: #79a36a;
             }
         }
+        .inviteUserContainer:focus-within{
+            transition: .2s;
+            border: 1px solid rgb(26, 151, 26);
+        }
         .anno{
             color: $text-color;
             margin-top: 2rem;

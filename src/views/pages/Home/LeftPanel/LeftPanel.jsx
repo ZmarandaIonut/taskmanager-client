@@ -1,16 +1,34 @@
-import React, {useEffect} from 'react'
+import React, {useState} from 'react'
 import classes from "./LeftPanel.module.scss";
 import { useNavigate } from 'react-router-dom';
+import { BiBell } from "react-icons/bi";
+import { useCheckUserNotificationsQuery } from '../../../../state/checkIfUserHasNotifications/api';
 
 const LeftPanel = ({user}) => {
   const navigate = useNavigate();
+  const [isNotificationPanelActive, setNotificationPanelActive] = useState(false);
+  const {data: userNotifications, isLoading} = useCheckUserNotificationsQuery();
+
   const logOut = () => {
     sessionStorage.removeItem("token");
     return window.location.replace("/login");
   }
+  function _handleBellClick(){
+    setNotificationPanelActive(true)
+    return navigate("/user-notifications");
+  }
   return (
     <div className={classes.mainPanel}>
-        <div  className={classes.userSection}>
+      {console.log(userNotifications)}
+      <div className={classes.notificationBellContainer} onClick={_handleBellClick}>
+          <div className={classes.notify}>
+            {userNotifications && userNotifications.data.data ? 
+             <span className={classes.bellNotification}/> : null
+            }
+            <BiBell/>
+          </div>
+      </div>  
+        <div className={classes.userSection}>
             <div className={classes.Usershape}>
                 <p>{user.name[0].toUpperCase()}</p>
             </div>

@@ -7,6 +7,7 @@ $text-color: #666666;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1;
 }
 .mainPanel{
     width: 90%;
@@ -19,6 +20,7 @@ $text-color: #666666;
     -webkit-box-shadow: -4px -1px 9px -1px rgba(0,0,0,0.56); 
     box-shadow: -4px -1px 9px -1px rgba(0,0,0,0.56);
     overflow: hidden;
+    z-index: 1;
 }
 .panelHeader{
     h1{
