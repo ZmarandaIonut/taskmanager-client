@@ -7,7 +7,7 @@ export const deleteNotification = api.injectEndpoints({
                 url: `/delete-notification/${id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: ["UserNotifications", "UserNotifications"]
+            invalidatesTags: ["UserNotifications", "CheckNotifications"]
         }),
 	}),
 });
