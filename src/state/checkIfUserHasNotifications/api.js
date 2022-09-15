@@ -10,4 +10,4 @@ export const checkUserNotifications = api.injectEndpoints({
 	}),
 });
 
-export const {useCheckUserNotificationsQuery} = checkUserNotifications;
+export const {useCheckUserNotificationsQuery, useLazyCheckUserNotificationsQuery} = checkUserNotifications;

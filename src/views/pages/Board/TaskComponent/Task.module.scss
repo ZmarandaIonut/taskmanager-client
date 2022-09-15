@@ -71,3 +71,18 @@ $text-color: #666666;
     padding: .15rem .5rem;
     cursor: pointer;
 }
+.openTaskComments{
+    position: absolute;
+    top: 12%;
+    right: 5%;
+    button{
+        background-color: #b0b0b3e1;
+        border: none;
+        padding: .3rem .7rem;
+        border-radius: 5px;
+    }
+    button:hover{
+        transition: .2s;
+        background-color: #7e7e7e;
+    }
+}

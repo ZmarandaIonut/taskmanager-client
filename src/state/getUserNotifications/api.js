@@ -11,4 +11,4 @@ export const getUserNotifications = api.injectEndpoints({
 	}),
 });
 
-export const {useGetUserNotificationsQuery} = getUserNotifications;
+export const {useGetUserNotificationsQuery, useLazyGetUserNotificationsQuery} = getUserNotifications;

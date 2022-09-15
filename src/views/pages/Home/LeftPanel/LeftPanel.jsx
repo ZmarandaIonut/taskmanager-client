@@ -1,28 +1,32 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import classes from "./LeftPanel.module.scss";
 import { useNavigate } from 'react-router-dom';
 import { BiBell } from "react-icons/bi";
-import { useCheckUserNotificationsQuery } from '../../../../state/checkIfUserHasNotifications/api';
+import { useCheckUserNotificationsQuery, useLazyCheckUserNotificationsQuery } from '../../../../state/checkIfUserHasNotifications/api';
 
 const LeftPanel = ({user}) => {
   const navigate = useNavigate();
-  const [isNotificationPanelActive, setNotificationPanelActive] = useState(false);
-  const {data: userNotifications, isLoading} = useCheckUserNotificationsQuery();
+  const [checkUserNotifications, {data: getUserNotifications}] = useLazyCheckUserNotificationsQuery();
 
   const logOut = () => {
     sessionStorage.removeItem("token");
     return window.location.replace("/login");
   }
   function _handleBellClick(){
-    setNotificationPanelActive(true)
     return navigate("/user-notifications");
   }
+  useEffect(() => {
+    checkUserNotifications();
+      const getNotifications = setInterval(() => {
+         checkUserNotifications();
+      }, 5000);
+      return () => clearInterval(getNotifications);
+  }, []);
   return (
     <div className={classes.mainPanel}>
-      {console.log(userNotifications)}
       <div className={classes.notificationBellContainer} onClick={_handleBellClick}>
           <div className={classes.notify}>
-            {userNotifications && userNotifications.data.data ? 
+            {getUserNotifications && getUserNotifications.data.data ? 
              <span className={classes.bellNotification}/> : null
             }
             <BiBell/>

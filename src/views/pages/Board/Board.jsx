@@ -19,6 +19,7 @@ import BoardInviteMembersPanel from './BoardInviteMembersPanel/BoardInviteMember
 import { setBoardInvitePanelActive } from '../../../state/Reducers/displayInviteUserPanel/displayInviteUserPanel';
 import { useDeleteUserBoardMutation } from '../../../state/deleteBoard/api';
 import { useArchiveBoardMutation } from '../../../state/archiveBoard/api';
+import TaskCommentsComponent from './TaskCommentsComponent';
 
 const Board = () => {
   const {slug} = useParams();
@@ -33,6 +34,7 @@ const Board = () => {
   const [deleteBoardMut, {isSuccess: hasBoardDeleted, isLoading: isBoardDeleting}] = useDeleteUserBoardMutation();
   const [archiveBoard, {isSuccess: hasBoardArchived, isLoading: isBoardArchiving}] = useArchiveBoardMutation(); 
   const {taskPanel} = useSelector((state) => state.taskPanel);
+  const {taskComments} = useSelector((state) => state.taskComments)
   const {inviteBoardMembers} = useSelector((state) => state.inviteBoardMembers);
 
   const deleteBoard = () => {
@@ -174,6 +176,7 @@ const Board = () => {
                                                                   isBoardOwner = {boardContent.data.isBoardOwner}
                                                                   />}
 
+                {boardContent && taskComments.isPanelActive && <TaskCommentsComponent  boardID = {boardContent.data.board_id}/>}
                 {boardContent && inviteBoardMembers.isPanelActive && <BoardInviteMembersPanel boardID = {boardContent.data.board_id}/>}
                 </div>
             </div>

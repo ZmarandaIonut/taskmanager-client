@@ -101,7 +101,7 @@ const UserNotification = () => {
                            </> 
                         }
                     </div>
-                    {result && <div className={classes.pagination}>
+                    {result && result.data.notifications.length > 0 && <div className={classes.pagination}>
                           <p>{result.data.currentPage} / {result.data.lastPage}</p>
                           {result.data.hasMorePages && <button onClick={nextPage}>Next page</button>}
                           {result.data.currentPage > 1 && <button onClick={prevPage}>Prev page</button>}
