@@ -113,7 +113,6 @@ const Login = () => {
               </div>
               
             )}
-            <a className={classes.forgotPassword}>Forgot password?</a>
           </form>
           <div className={reusable.form_anno}>
           

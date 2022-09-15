@@ -176,7 +176,7 @@ const Board = () => {
                                                                   isBoardOwner = {boardContent.data.isBoardOwner}
                                                                   />}
 
-                {boardContent && taskComments.isPanelActive && <TaskCommentsComponent  boardID = {boardContent.data.board_id}/>}
+                {boardContent && taskComments.isPanelActive && <TaskCommentsComponent  boardID = {boardContent.data.board_id} userRole = {boardContent.data.userRole}/>}
                 {boardContent && inviteBoardMembers.isPanelActive && <BoardInviteMembersPanel boardID = {boardContent.data.board_id}/>}
                 </div>
             </div>

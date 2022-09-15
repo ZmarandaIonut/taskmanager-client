@@ -8,7 +8,7 @@ import { FiClock } from "react-icons/fi";
 import classes from "./TaskComponent.module.scss";
 import { useDeleteTaskCommentsMutation } from '../../../../state/deleteUserComment/api';
 
-const TaskCommentsComponent = ({boardID}) => {
+const TaskCommentsComponent = ({boardID, userRole}) => {
     const dispatch = useDispatch();
     const [page, setPage] = useState(1);
     const [requestDelete, setRequestDelete] = useState();
@@ -46,7 +46,7 @@ const TaskCommentsComponent = ({boardID}) => {
   return (
     <div className={classes.mainContainer}>
         <div className={classes.commentsPanel}>
-         <div className={classes.closeTab} onClick={closePanelTab}>
+            <div className={classes.closeTab} onClick={closePanelTab}>
                 <button>✖</button>
             </div>
             <div className={classes.panelHeader}>
@@ -65,10 +65,10 @@ const TaskCommentsComponent = ({boardID}) => {
                 <div className={classes.commentsContainer}>
                     {data && data.data.comments.map(comment => {
                       return <div key={comment.id} className={classes.comment}>
-                                {comment.id === requestDelete && isDeletingCommentLoading ? <LoadingSpinner/> : 
+                                {comment.id === requestDelete && isDeletingCommentLoading ? <div className={classes.deleteCommentLoading}><LoadingSpinner width={"1.5rem"} height={"1.5rem"}/></div> : 
                                 <>
                                 {
-                                   comment.user_email === user.email && 
+                                   (comment.user_email === user.email || userRole === "Admin") && 
                                    <div className={classes.removeComment}>
                                      <button onClick={() => deleteComment(comment.id)}>✖</button>
                                   </div> 
