@@ -20,10 +20,18 @@ const TaskCommentsComponent = ({ boardID, userRole }) => {
   const [isDropDownActive, setDropDownActive] = useState(false);
   const [searchUser, setSearchUser] = useState("");
   const [hasUserClickOnAutoComplete, setAutoCompleteClick] = useState(false);
+  const [appError, setAppError] = useState();
   const { taskComments } = useSelector((state) => state.taskComments);
   const { user } = useSelector((state) => state.user);
-  const [createComment, { isLoading: isLoadingCreateTask }] =
-    useCreateCommentMutation();
+  const [
+    createComment,
+    {
+      isLoading: isLoadingCreateTask,
+      isSuccess: commentCreated,
+      isError: createCommentError,
+      error,
+    },
+  ] = useCreateCommentMutation();
   const { data, isLoading: commentsLoading } = useGetTaskCommentsQuery({
     id: taskComments.payload.taskID,
     page,
@@ -79,6 +87,18 @@ const TaskCommentsComponent = ({ boardID, userRole }) => {
       setDropDownActive(false);
     }
   }, [comment]);
+
+  useEffect(() => {
+    if (commentCreated) {
+      setAppError("");
+    }
+  }, [commentCreated]);
+
+  useEffect(() => {
+    if (createCommentError) {
+      setAppError(error.data.message);
+    }
+  }, [createCommentError]);
   return (
     <div className={classes.mainContainer}>
       <div
@@ -101,21 +121,28 @@ const TaskCommentsComponent = ({ boardID, userRole }) => {
             setAutoCompleteClick={setAutoCompleteClick}
           />
         ) : null}
-        <div className={classes.addCommentContainer}>
-          <input
-            onChange={(e) => setComment(e.target.value)}
-            placeholder="Add comment"
-            value={comment}
-          />
-
-          {isLoadingCreateTask ? (
-            <div className={classes.createTaskLoading}>
-              <LoadingSpinner width={"1.5rem"} height={"1.5rem"} />
+        <div className={classes.addComentMainContainer}>
+          <div className={classes.addCommentContainer}>
+            <input
+              onChange={(e) => setComment(e.target.value)}
+              placeholder="Add comment"
+              value={comment}
+            />
+            {isLoadingCreateTask ? (
+              <div className={classes.createTaskLoading}>
+                <LoadingSpinner width={"1.5rem"} height={"1.5rem"} />
+              </div>
+            ) : (
+              <button onClick={createNewComment}>✚</button>
+            )}
+          </div>
+          {appError && (
+            <div className={classes.appError}>
+              <p>{appError}</p>
             </div>
-          ) : (
-            <button onClick={createNewComment}>✚</button>
           )}
         </div>
+
         <div className={classes.commentsPanel}>
           {commentsLoading ? (
             <div className={classes.loadingContainer}>
