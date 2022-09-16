@@ -45,6 +45,8 @@ $text-color: #666666;
         margin-top: 1.5rem;
         display: flex;
         input{
+            width: 12rem;
+            height: 1.5rem;
             padding: .3rem 1rem;
             border-radius: 5px;
             border-color: #a8a7a7;
@@ -55,7 +57,7 @@ $text-color: #666666;
             background-color: #8BC078;
             border: none;
             color: white;
-            padding: .3rem .5rem;
+            padding: .3rem 1rem;
             border-radius: 5px;
             cursor: pointer;
         }

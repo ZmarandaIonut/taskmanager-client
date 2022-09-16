@@ -5,6 +5,7 @@ import { setPanelActive } from '../../../../state/Reducers/displayTaskPanel/disp
 import { setPanelStatus } from '../../../../state/Reducers/displayTaskComments/displayTaskComments';
 import {TbSettings} from "react-icons/tb";
 import { BiCommentDetail } from "react-icons/bi";
+
 const Task = ({taskID,name, isActive}) => {
   const dispatch = useDispatch();
   function displayTaskPanel(){

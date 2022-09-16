@@ -20,6 +20,7 @@ import { setBoardInvitePanelActive } from '../../../state/Reducers/displayInvite
 import { useDeleteUserBoardMutation } from '../../../state/deleteBoard/api';
 import { useArchiveBoardMutation } from '../../../state/archiveBoard/api';
 import TaskCommentsComponent from './TaskCommentsComponent';
+import { setPanelStatus } from '../../../state/Reducers/displayTaskComments/displayTaskComments';
 
 const Board = () => {
   const {slug} = useParams();
@@ -73,6 +74,10 @@ const Board = () => {
       if(inviteBoardMembers.isPanelActive){
         dispatch(setBoardInvitePanelActive({isPanelActive: false}))
       }
+      if(taskComments.isPanelActive){
+        dispatch(setPanelStatus({isPanelActive: false}));
+      }
+
   }, [getBoardContentError, boardContent]);
   useEffect(() => {
       if(hasBoardDeleted){

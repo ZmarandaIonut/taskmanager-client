@@ -21,7 +21,7 @@ const UserNotification = () => {
     const {user} = useSelector((state) => state.user);
     const [getUser, {data: userFromRequest, isSuccess: isGetUserSucces, isError: getUserError}] = useLazyGetAuthUserQuery();
     const [deleteNotification, {isLoading: isDeletingNotificationLoading}] = useDeleteNotifiactionMutation();
-    const {data: result, isLoading: notificationsLoading} = useGetUserNotificationsQuery(currentPage);
+    const {data: result, isLoading: notificationsLoading} = useGetUserNotificationsQuery(currentPage, { refetchOnMountOrArgChange: true });
     const [markNotification, {isLoading: markNotificationLoading}] = useMarkNotificationAsSeenMutation();
 
     const navigate = useNavigate();
