@@ -19,7 +19,7 @@ const TaskCommentsComponent = ({ boardID, userRole }) => {
   const [comment, setComment] = useState("");
   const [isDropDownActive, setDropDownActive] = useState(false);
   const [searchUser, setSearchUser] = useState("");
-  const [hasUserClickOnAutoComplete, setAutoCompleteClick] = useState(false);
+  const [hasUserClickOnAutoComplete, setAutoCompleteClick] = useState("");
   const [appError, setAppError] = useState();
   const { taskComments } = useSelector((state) => state.taskComments);
   const { user } = useSelector((state) => state.user);
@@ -57,7 +57,7 @@ const TaskCommentsComponent = ({ boardID, userRole }) => {
       comment: comment,
       task_id: taskComments.payload.taskID,
       board_id: boardID,
-      tagged_user_email: searchUser + ".com",
+      tagged_user_email: searchUser,
     };
     createComment(payload);
     setComment("");
@@ -75,16 +75,25 @@ const TaskCommentsComponent = ({ boardID, userRole }) => {
   useEffect(() => {
     const result = comment.match(/\@[^\s\.]+/);
     if (result) {
-      const serachUser = result[0].slice(1);
-      setSearchUser(serachUser);
-      if (serachUser !== hasUserClickOnAutoComplete) {
+      const getUser = result[0].slice(1);
+      const getEmailFromResult = result.input.match(
+        /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/
+      );
+      if (getEmailFromResult) {
+        setSearchUser(getEmailFromResult[0]);
+      }
+      if (getUser) {
+        if (
+          getEmailFromResult &&
+          getEmailFromResult[0] === hasUserClickOnAutoComplete
+        ) {
+          return setDropDownActive(false);
+        }
+        setSearchUser(getUser);
         setDropDownActive(true);
-      } else {
-        setDropDownActive(false);
       }
     } else {
       setSearchUser("");
-      setDropDownActive(false);
     }
   }, [comment]);
 
