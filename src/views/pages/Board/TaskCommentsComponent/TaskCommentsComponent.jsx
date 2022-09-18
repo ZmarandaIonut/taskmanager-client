@@ -83,14 +83,13 @@ const TaskCommentsComponent = ({ boardID, userRole }) => {
         setSearchUser(getEmailFromResult[0]);
       }
       if (getUser) {
-        if (
-          getEmailFromResult &&
-          getEmailFromResult[0] === hasUserClickOnAutoComplete
-        ) {
+        if ((getEmailFromResult && getEmailFromResult[0] === hasUserClickOnAutoComplete) || getEmailFromResult) {
           return setDropDownActive(false);
         }
-        setSearchUser(getUser);
-        setDropDownActive(true);
+        else{
+          setSearchUser(getUser);
+          setDropDownActive(true);
+        }
       }
     } else {
       setSearchUser("");

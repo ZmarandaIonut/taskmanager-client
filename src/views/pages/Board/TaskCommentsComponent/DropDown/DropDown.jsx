@@ -17,7 +17,8 @@ const DropDown = ({
   });
 
   function replaceUser(email) {
-    const newComment = comment.replace(/\@[^\s\.]+/, "@" + email);
+   // /\@[^\s\.]+/
+    const newComment = comment.replace(/@([^\s]+)/, "@" + email);
     setComment(newComment);
     setAutoCompleteClick(email);
   }

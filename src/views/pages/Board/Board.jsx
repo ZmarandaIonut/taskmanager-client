@@ -21,6 +21,8 @@ import { useDeleteUserBoardMutation } from '../../../state/deleteBoard/api';
 import { useArchiveBoardMutation } from '../../../state/archiveBoard/api';
 import TaskCommentsComponent from './TaskCommentsComponent';
 import { setPanelStatus } from '../../../state/Reducers/displayTaskComments/displayTaskComments';
+import TaskHistoryPanel from './TaskComponent/TaskHistoryPanel/TaskHistoryPanel';
+import { setHistoryPanel } from '../../../state/Reducers/displayTaskHistoryPanel/displayTaskHistoryPanel';
 
 const Board = () => {
   const {slug} = useParams();
@@ -37,6 +39,7 @@ const Board = () => {
   const {taskPanel} = useSelector((state) => state.taskPanel);
   const {taskComments} = useSelector((state) => state.taskComments)
   const {inviteBoardMembers} = useSelector((state) => state.inviteBoardMembers);
+  const {taskHistory} = useSelector((state) => state.taskHistory);
 
   const deleteBoard = () => {
     deleteBoardMut(boardContent.data.board_id);
@@ -76,6 +79,9 @@ const Board = () => {
       }
       if(taskComments.isPanelActive){
         dispatch(setPanelStatus({isPanelActive: false}));
+      }
+      if(taskHistory.isPanelActive){
+        dispatch(setHistoryPanel({isPanelActive: false}));
       }
 
   }, [getBoardContentError, boardContent]);
@@ -182,6 +188,8 @@ const Board = () => {
                                                                   />}
 
                 {boardContent && taskComments.isPanelActive && <TaskCommentsComponent  boardID = {boardContent.data.board_id} userRole = {boardContent.data.userRole}/>}
+                {boardContent && taskHistory.isPanelActive && <TaskHistoryPanel/>}
+                {console.log(taskHistory)}
                 {boardContent && inviteBoardMembers.isPanelActive && <BoardInviteMembersPanel boardID = {boardContent.data.board_id}/>}
                 </div>
             </div>
