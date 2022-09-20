@@ -10,6 +10,8 @@ import { useDeleteTaskCommentsMutation } from "../../../../state/deleteUserComme
 import DropDown from "./DropDown";
 import { useParams } from "react-router-dom";
 import { generateMessage } from "./TaskCommments.logic";
+import Echo from "laravel-echo";
+import Pusher from "pusher-js";
 
 const TaskCommentsComponent = ({ boardID, userRole }) => {
   const dispatch = useDispatch();
@@ -23,6 +25,24 @@ const TaskCommentsComponent = ({ boardID, userRole }) => {
   const [appError, setAppError] = useState();
   const { taskComments } = useSelector((state) => state.taskComments);
   const { user } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    window.Pusher = Pusher;
+
+    window.Echo = new Echo({
+      broadcaster: "pusher",
+      key: process.env.REACT_APP_WEBSOCKETS_KEY,
+      wsHost: process.env.REACT_APP_WEBSOCKETS_SERVER,
+      wsPort: 6001,
+      forceTLS: false,
+      disableStatus: true,
+    });
+
+    window.Echo.channel("task_comments").listen("task_comments", (e) => {
+      console.log(e);
+    });
+  }, []);
+
   const [
     createComment,
     {
@@ -83,10 +103,13 @@ const TaskCommentsComponent = ({ boardID, userRole }) => {
         setSearchUser(getEmailFromResult[0]);
       }
       if (getUser) {
-        if ((getEmailFromResult && getEmailFromResult[0] === hasUserClickOnAutoComplete) || getEmailFromResult) {
+        if (
+          (getEmailFromResult &&
+            getEmailFromResult[0] === hasUserClickOnAutoComplete) ||
+          getEmailFromResult
+        ) {
           return setDropDownActive(false);
-        }
-        else{
+        } else {
           setSearchUser(getUser);
           setDropDownActive(true);
         }
