@@ -20,6 +20,7 @@ const TaskCommentsComponent = ({ boardID, userRole }) => {
   const [requestDelete, setRequestDelete] = useState();
   const [comment, setComment] = useState("");
   const [getTaskComments, setTaskComments] = useState([]);
+  const [getAddedTask, setAddedTask] = useState();
   const [isDropDownActive, setDropDownActive] = useState(false);
   const [searchUser, setSearchUser] = useState("");
   const [hasUserClickOnAutoComplete, setAutoCompleteClick] = useState("");
@@ -27,33 +28,36 @@ const TaskCommentsComponent = ({ boardID, userRole }) => {
   const { taskComments } = useSelector((state) => state.taskComments);
   const { user } = useSelector((state) => state.user);
 
-  window.Pusher = Pusher;
+  useEffect(() => {
+    window.Pusher = Pusher;
 
-  window.Echo = new Echo({
-    broadcaster: "pusher",
-    key: process.env.REACT_APP_WEBSOCKETS_KEY,
-    wsHost: process.env.REACT_APP_WEBSOCKETS_SERVER,
-    wsPort: 6001,
-    forceTLS: false,
-    disableStatus: true,
-  });
-
-  window.Echo.channel(`user.${user.id}`).listen("SendEventToClient", (e) => {
-    if (e.action === "comments") {
-      if (e.content.task_id === taskComments.payload.taskID) {
-        return setTaskComments([e.content, ...getTaskComments]);
+    window.Echo = new Echo({
+      broadcaster: "pusher",
+      key: process.env.REACT_APP_WEBSOCKETS_KEY,
+      wsHost: process.env.REACT_APP_WEBSOCKETS_SERVER,
+      wsPort: 6001,
+      forceTLS: false,
+      disableStatus: true,
+      enabledTransports: ["ws", "wss"],
+    });
+  }, []);
+  if (window?.Echo) {
+    window.Echo.channel(`user.${user.id}`).listen("SendEventToClient", (e) => {
+      if (e.action === "comments") {
+        if (e.content.task_id === taskComments.payload.taskID) {
+          return setTaskComments([e.content, ...getTaskComments]);
+        }
       }
-    }
-    if (
-      e.action === "delete_comment" &&
-      taskComments.payload.taskID === e.content.task_id
-    ) {
-      return setTaskComments((prev) =>
-        prev.filter((comment) => comment.id !== +e.content.comment_id)
-      );
-    }
-  });
-
+      if (
+        e.action === "delete_comment" &&
+        taskComments.payload.taskID === e.content.task_id
+      ) {
+        return setTaskComments((prev) =>
+          prev.filter((comment) => comment.id !== +e.content.comment_id)
+        );
+      }
+    });
+  }
   const [
     createComment,
     {
@@ -132,6 +136,8 @@ const TaskCommentsComponent = ({ boardID, userRole }) => {
 
   useEffect(() => {
     if (commentCreated) {
+      // console.log(getAddedTask, "addedTask");
+      //  setTaskComments([getAddedTask, ...getTaskComments]);
       setAppError("");
     }
   }, [commentCreated]);

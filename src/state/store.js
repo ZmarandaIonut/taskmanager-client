@@ -4,6 +4,7 @@ import TaskPanelReducer from "./Reducers/displayTaskPanel/displayTaskPanel";
 import BoardMemberInvitePanel from "./Reducers/displayInviteUserPanel/displayInviteUserPanel"
 import TaskCommentsReducer from "./Reducers/displayTaskComments/displayTaskComments";
 import TaskHistoryPanel from "./Reducers/displayTaskHistoryPanel/displayTaskHistoryPanel";
+import UserNotifications from "./Reducers/userNotifications/hasUserNotifications";
 import {api} from "./emptySplitApi";
 
 export default configureStore({
@@ -12,7 +13,8 @@ export default configureStore({
         taskPanel: TaskPanelReducer,
         inviteBoardMembers: BoardMemberInvitePanel,
         taskComments: TaskCommentsReducer,
-        taskHistory:TaskHistoryPanel, 
+        taskHistory:TaskHistoryPanel,
+        userNotifications: UserNotifications,
         [api.reducerPath]: api.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware)
