@@ -51,6 +51,7 @@ const TaskPanel = ({boardID, userRole, isBoardOwner}) => {
         setTaskStatus(payload);
    }
    const deleteTask = () => {
+    
      deleteTaskMut(taskPanel.payload.taskID);
    }    
    const archiveTasKForUser = () => {

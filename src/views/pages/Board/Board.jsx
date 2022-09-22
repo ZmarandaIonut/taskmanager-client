@@ -23,10 +23,13 @@ import TaskCommentsComponent from "./TaskCommentsComponent";
 import { setPanelStatus } from "../../../state/Reducers/displayTaskComments/displayTaskComments";
 import TaskHistoryPanel from "./TaskComponent/TaskHistoryPanel/TaskHistoryPanel";
 import { setHistoryPanel } from "../../../state/Reducers/displayTaskHistoryPanel/displayTaskHistoryPanel";
+import Echo from "laravel-echo";
+import Pusher from "pusher-js";
 
 const Board = () => {
   const { slug } = useParams();
   const { user } = useSelector((state) => state.user);
+  const [boardStatuses, setBoardStatuses] = useState([]);
   const [displayBoardMembers, setDisplayBoardMembers] = useState(false);
 
   const dispatch = useDispatch();
@@ -64,6 +67,38 @@ const Board = () => {
     archiveBoard(boardContent.data.board_id);
   };
 
+  /*
+  useEffect(() => {
+    window.Pusher = Pusher;
+
+    window.Echo = new Echo({
+      broadcaster: "pusher",
+      key: process.env.REACT_APP_WEBSOCKETS_KEY,
+      wsHost: process.env.REACT_APP_WEBSOCKETS_SERVER,
+      wsPort: 6001,
+      forceTLS: false,
+      disableStatus: true,
+      enabledTransports: ["ws", "wss"],
+    });
+  }, []);
+
+  if (window?.Echo) {
+    window.Echo.channel(`user.${user.id}`).listen("SendEventToClient", (e) => {
+      if (e.action === "new_status") {
+        setBoardStatuses([...boardStatuses, e.content]);
+      } else if (e.action === "new_task") {
+        const newStatuses = [...boardStatuses];
+        newStatuses.forEach((item, idx) => {
+          if (item.id === e.content.id) {
+            newStatuses[idx] = e.content;
+          }
+        });
+        setBoardStatuses(newStatuses);
+        //  console.log(e.content, console.log(boardStatuses));
+      }
+    });
+  }
+*/
   useEffect(() => {
     if (Object.keys(user).length === 0) {
       trigger();
@@ -79,6 +114,7 @@ const Board = () => {
       dispatch(addUser(result.data.user));
     }
   }, [isError, isSuccess]);
+
   useEffect(() => {
     if (getBoardContentError) {
       return navigate("/");
@@ -101,16 +137,24 @@ const Board = () => {
       dispatch(setHistoryPanel({ isPanelActive: false }));
     }
   }, [getBoardContentError, boardContent]);
+
   useEffect(() => {
     if (hasBoardDeleted) {
       return navigate("/");
     }
   }, [hasBoardDeleted]);
+
   useEffect(() => {
     if (hasBoardArchived) {
       return navigate("/");
     }
   }, [hasBoardArchived]);
+
+  useEffect(() => {
+    if (boardContent) {
+      setBoardStatuses(boardContent.data.statuses);
+    }
+  }, [boardContent]);
   return (
     <div className={classes.mainContainer}>
       {Object.keys(user).length && (
@@ -218,18 +262,17 @@ const Board = () => {
                     </div>
                   ) : (
                     <div className={classes.statusesContainer}>
-                      {boardContent &&
-                        boardContent.data.statuses.map((statuses) => {
-                          return (
-                            <Status
-                              key={statuses.id}
-                              userRole={boardContent.data.userRole}
-                              statusID={statuses.id}
-                              name={statuses.name}
-                              tasks={statuses.tasks}
-                            />
-                          );
-                        })}
+                      {boardStatuses.map((statuses) => {
+                        return (
+                          <Status
+                            key={statuses.id}
+                            userRole={boardContent.data.userRole}
+                            statusID={statuses.id}
+                            name={statuses.name}
+                            tasks={statuses.tasks}
+                          />
+                        );
+                      })}
                     </div>
                   )}
                 </>

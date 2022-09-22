@@ -58,6 +58,7 @@ const TaskCommentsComponent = ({ boardID, userRole }) => {
       }
     });
   }
+
   const [
     createComment,
     {
