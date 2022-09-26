@@ -254,7 +254,10 @@ const Board = () => {
                     </div>
                   </div>
                   {boardContent && boardContent.data.userRole === "Admin" ? (
-                    <CreateStatuses boardID={boardContent.data.board_id} />
+                    <CreateStatuses
+                      boardID={boardContent.data.board_id}
+                      setBoardStatuses={setBoardStatuses}
+                    />
                   ) : null}
                   {boardContent && boardContent.data.statuses.length === 0 ? (
                     <div className={classes.noContent}>
@@ -270,6 +273,7 @@ const Board = () => {
                             statusID={statuses.id}
                             name={statuses.name}
                             tasks={statuses.tasks}
+                            setBoardStatuses={setBoardStatuses}
                           />
                         );
                       })}

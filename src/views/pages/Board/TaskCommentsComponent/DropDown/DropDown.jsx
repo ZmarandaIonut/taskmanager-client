@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import { useGetBoardMembersQuery } from "../../../../../state/getBoardMembers/api";
 import LoadingSpinner from "../../../../utils/LoadingSpinner/LoadingSpinner";
 import classes from "./DropDown.module.scss";
@@ -17,11 +18,19 @@ const DropDown = ({
   });
 
   function replaceUser(email) {
-   // /\@[^\s\.]+/
+    // /\@[^\s\.]+/
     const newComment = comment.replace(/@([^\s]+)/, "@" + email);
     setComment(newComment);
     setAutoCompleteClick(email);
   }
+
+  useEffect(() => {
+    if (result) {
+      if (!result.data.length) {
+        setDropDownActive(false);
+      }
+    }
+  }, [result]);
   return (
     <div className={classes.dropDownMainContainer}>
       {isLoading ? (
@@ -45,7 +54,7 @@ const DropDown = ({
                   </div>
                 );
               })
-            : setDropDownActive(false)}
+            : null}
         </div>
       )}
     </div>
