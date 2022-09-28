@@ -137,8 +137,6 @@ const TaskCommentsComponent = ({ boardID, userRole }) => {
 
   useEffect(() => {
     if (commentCreated) {
-      // console.log(getAddedTask, "addedTask");
-      //  setTaskComments([getAddedTask, ...getTaskComments]);
       setAppError("");
     }
   }, [commentCreated]);
@@ -244,7 +242,7 @@ const TaskCommentsComponent = ({ boardID, userRole }) => {
                           </div>
 
                           <p>
-                            <strong>Message:</strong>{" "}
+                            <strong>Message:</strong>
                             <span
                               dangerouslySetInnerHTML={{
                                 __html: generateMessage(comment.comment),

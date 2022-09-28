@@ -81,7 +81,7 @@ const Profile = () => {
       <div className={reusable.main_container_shape}>
         <img src={mainPageShape} />
       </div>
-      {IsLoading ? (
+      {isLoading ? (
         <LoadingSpinner />
       ) : (
         <>
