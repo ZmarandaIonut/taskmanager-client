@@ -4,9 +4,9 @@ import { useCreateNewStatusMutation } from "../../../../state/createNewStatus/ap
 import LoadingSpinner from "../../../utils/LoadingSpinner/LoadingSpinner";
 import classes from "./CreateStatuses.module.scss";
 
-const CreateStatuses = ({ boardID, setBoardStatuses }) => {
+const CreateStatuses = ({ boardID, boardStatuses, setBoardStatuses }) => {
   const [inputValue, setInputValue] = useState("");
-  const [createStatus, { data: status, isLoading, isError, isSuccess }] =
+  const [createStatus, { data: status, isLoading, isSuccess }] =
     useCreateNewStatusMutation();
 
   function createBoardStatus() {
@@ -19,7 +19,9 @@ const CreateStatuses = ({ boardID, setBoardStatuses }) => {
   }
   useEffect(() => {
     if (isSuccess) {
-      setBoardStatuses((statuses) => [...statuses, status.data]);
+      console.log(status.data, boardStatuses);
+      setBoardStatuses([...boardStatuses, status.data]);
+      console.log(boardStatuses);
     }
   }, [isSuccess]);
   return (

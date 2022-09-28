@@ -9,6 +9,7 @@ import Home from "../pages/Home/Home";
 import JoinBoard from "../pages/JoinBoard/JoinBoard";
 import Login from "../pages/Login/Login";
 import NotFound from "../pages/NotFound";
+import Profile from "../pages/Profile";
 import Register from "../pages/Register/Register";
 import ResendVerifyEmail from "../pages/ResendVerifyEmail";
 import UserNotification from "../pages/userNotifications";
@@ -38,6 +39,7 @@ const Router = () => {
           path="/user-notifications"
           element={<UserNotification />}
         ></Route>
+        <Route path="/profile/:id" element={<Profile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

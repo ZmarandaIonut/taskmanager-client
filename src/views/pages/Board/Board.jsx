@@ -256,10 +256,11 @@ const Board = () => {
                   {boardContent && boardContent.data.userRole === "Admin" ? (
                     <CreateStatuses
                       boardID={boardContent.data.board_id}
+                      boardStatuses={boardStatuses}
                       setBoardStatuses={setBoardStatuses}
                     />
                   ) : null}
-                  {boardContent && boardContent.data.statuses.length === 0 ? (
+                  {boardContent && boardStatuses.length === 0 ? (
                     <div className={classes.noContent}>
                       <h3>This board has no content</h3>
                     </div>

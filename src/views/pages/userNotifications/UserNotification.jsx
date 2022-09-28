@@ -66,7 +66,6 @@ const UserNotification = () => {
   if (window?.Echo) {
     window.Echo.channel(`user.${user.id}`).listen("SendEventToClient", (e) => {
       if (e.action === "notification") {
-        console.log("notification", e.action);
         setUserNotifications([e.content, ...userNotifications]);
         dispatch(setHasUserNewNotifications({ value: true }));
       } else if (e.action === "delete_notification") {

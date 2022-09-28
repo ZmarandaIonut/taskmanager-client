@@ -54,7 +54,6 @@ const LeftPanel = ({ user }) => {
         })
       );
     }
-    //   dispatch(setHasUserNewNotifications({value: hasUserNotifications.data.data}))
   }, [hasUserNotifications]);
   return (
     <div className={classes.mainPanel}>
@@ -84,6 +83,15 @@ const LeftPanel = ({ user }) => {
           <div className={classes.shape} />
           <div>
             <p>Home</p>
+          </div>
+        </div>
+        <div
+          className={classes.navListContainer}
+          onClick={() => navigate(`/profile/${user.id}`)}
+        >
+          <div className={classes.shape} />
+          <div>
+            <p>Profile</p>
           </div>
         </div>
         <div

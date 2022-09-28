@@ -169,6 +169,9 @@ $text-color: #666666;
     }
 }
 .noContent{
+    position: absolute;
+    top: 13%;
+    left: 40%;
     display: flex;
     align-items: center;
     justify-content: center;
