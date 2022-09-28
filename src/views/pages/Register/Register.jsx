@@ -6,7 +6,7 @@ import passwordImg from "../../resources/imgs/padlock.png";
 import mainPageShape from "../../resources/shapes/mainPageShape.png";
 import classes from "./Register.module.scss";
 import reusable from "./../../resources/css/reusable.module.scss";
-import { useRegisterUserMutation } from "../../../state/register/api";
+import { useRegisterUserMutation } from "../../../state/user/api";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -30,8 +30,9 @@ const Register = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  console.log(useRegisterUserMutation)
-  const [registerUser, { isSuccess, isLoading, isError, error }] = useRegisterUserMutation();
+  console.log(useRegisterUserMutation);
+  const [registerUser, { isSuccess, isLoading, isError, error }] =
+    useRegisterUserMutation();
 
   const navigate = useNavigate();
 
@@ -49,11 +50,10 @@ const Register = () => {
       setAppError("");
     }
     if (isError) {
-      if(typeof error.data.message == "string"){
+      if (typeof error.data.message == "string") {
         return setAppError(error.data.message);
-      }
-      else{
-          return setAppError(Object.values(error.data.errors)[0][0]);
+      } else {
+        return setAppError(Object.values(error.data.errors)[0][0]);
       }
     }
     if (isSuccess) {

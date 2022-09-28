@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useCreateCommentMutation } from "../../../../state/createTaskComment/api";
-import { useGetTaskCommentsQuery } from "../../../../state/getTaskComments/api";
+import { useCreateCommentMutation } from "../../../../state/tasks/api";
+import { useGetTaskCommentsQuery } from "../../../../state/tasks/api";
 import { setPanelStatus } from "../../../../state/Reducers/displayTaskComments/displayTaskComments";
 import LoadingSpinner from "../../../utils/LoadingSpinner/LoadingSpinner";
 import { FiClock } from "react-icons/fi";
 import classes from "./TaskComponent.module.scss";
-import { useDeleteTaskCommentsMutation } from "../../../../state/deleteUserComment/api";
+import { useDeleteTaskCommentsMutation } from "../../../../state/tasks/api";
 import DropDown from "./DropDown";
 import { useParams } from "react-router-dom";
 import { generateMessage } from "./TaskCommments.logic";

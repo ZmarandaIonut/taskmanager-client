@@ -3,7 +3,7 @@ import classes from "./LeftPanel.module.scss";
 import { useNavigate } from "react-router-dom";
 import { BiBell } from "react-icons/bi";
 import { setHasUserNewNotifications } from "../../../../state/Reducers/userNotifications/hasUserNotifications";
-import { useCheckUserNotificationsQuery } from "../../../../state/checkIfUserHasNotifications/api";
+import { useCheckUserNotificationsQuery } from "../../../../state/notifications/api";
 import Pusher from "pusher-js";
 import Echo from "laravel-echo";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,12 +34,10 @@ const LeftPanel = ({ user }) => {
       disableStatus: true,
       enabledTransports: ["ws", "wss"],
     });
-    console.log(userNotifications.value, "value");
   }, []);
   if (window?.Echo) {
     window.Echo.channel(`user.${user.id}`).listen("SendEventToClient", (e) => {
       if (e.action === "notification") {
-        console.log(userNotifications);
         if (!userNotifications.value) {
           dispatch(setHasUserNewNotifications({ value: true }));
         }

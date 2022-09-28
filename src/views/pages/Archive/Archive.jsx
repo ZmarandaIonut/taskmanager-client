@@ -11,15 +11,17 @@ import Board from "../Home/CenterPanel/components/Board/Board";
 import Pagination from "../Home/CenterPanel/components/Pagination";
 import { useGetUserArchivedBoardsQuery } from "../../../state/boards/api";
 import { useNavigate } from "react-router-dom";
-import { useGetUserArchivedTasksQuery } from "../../../state/getUserArchivedTasks/api";
+import { useGetUserArchivedTasksQuery } from "../../../state/tasks/api";
 import ArchiveTask from "./ArchiveTaskComponent";
 
 const Archive = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [userBoardsPage, setUserBoardsPage] = useState(1);
   const [archivedTasksPage, setArchivedBoardsPage] = useState(1);
-  const { data: result, isLoading: isUserBoardsLoading } = useGetUserArchivedBoardsQuery(userBoardsPage);
-  const {data: userArchivedTasks, isLoading: isArchivedTasksLoading} = useGetUserArchivedTasksQuery(archivedTasksPage);
+  const { data: result, isLoading: isUserBoardsLoading } =
+    useGetUserArchivedBoardsQuery(userBoardsPage);
+  const { data: userArchivedTasks, isLoading: isArchivedTasksLoading } =
+    useGetUserArchivedTasksQuery(archivedTasksPage);
 
   const navigate = useNavigate;
   const { user } = useSelector((state) => state.user);
@@ -56,9 +58,9 @@ const Archive = () => {
       <div className={reusable.main_container_shape}>
         <img src={mainPageShape} />
       </div>
-      {
-        isLoading ? <LoadingSpinner/>
-                   : 
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
         <>
           <LeftPanel user={user} />
           <div className={classes.container}>
@@ -97,9 +99,16 @@ const Archive = () => {
                     <LoadingSpinner />
                   ) : (
                     <>
-                      {userArchivedTasks && userArchivedTasks.data.tasks.length ? (
+                      {userArchivedTasks &&
+                      userArchivedTasks.data.tasks.length ? (
                         userArchivedTasks.data.tasks.map((task) => {
-                          return <ArchiveTask key={task.id} name={task.name} taskID={task.id}/>;
+                          return (
+                            <ArchiveTask
+                              key={task.id}
+                              name={task.name}
+                              taskID={task.id}
+                            />
+                          );
                         })
                       ) : (
                         <h3>Nothing to display</h3>
@@ -118,7 +127,7 @@ const Archive = () => {
             </div>
           </div>
         </>
-      }
+      )}
     </div>
   );
 };

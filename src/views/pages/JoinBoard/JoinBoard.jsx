@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { useJoinBoardMutation } from "../../../state/joinBoard/api";
+import { useJoinBoardMutation } from "../../../state/boards/api";
 import passImg from "../../resources/imgs/padlock.png";
 import mainPageShape from "../../resources/shapes/mainPageShape.png";
 import reusable from "./../../resources/css/reusable.module.scss";
@@ -36,12 +36,11 @@ const JoinBoard = () => {
     joinBoard(payload);
   };
   useEffect(() => {
-      if(Object.keys(user).length > 0){
-        setIsUserAuth(true);
-      }
-      else{
-        return navigate("/");
-      }
+    if (Object.keys(user).length > 0) {
+      setIsUserAuth(true);
+    } else {
+      return navigate("/");
+    }
   }, []);
   useEffect(() => {
     if (isLoading) {
@@ -60,18 +59,23 @@ const JoinBoard = () => {
       <div className={reusable.main_container_shape}>
         <img src={mainPageShape} />
       </div>
-     {isUserAuth && 
-     <>
-      <LeftPanel user={user} />
-      <div className={classes.container}>
-          <div className={classes.panelContent}>
-          <h1>Join board</h1>
+      {isUserAuth && (
+        <>
+          <LeftPanel user={user} />
+          <div className={classes.container}>
+            <div className={classes.panelContent}>
+              <h1>Join board</h1>
               <form onSubmit={handleSubmit(submitForm)}>
                 <div className={reusable.form_div}>
                   <div className={reusable.form_img_container}>
                     <img alt="codeImg" src={passImg} width="20px" />
                   </div>
-                  <input autoFocus={true} name="Code" placeholder="Code received" {...register("Code")} />
+                  <input
+                    autoFocus={true}
+                    name="Code"
+                    placeholder="Code received"
+                    {...register("Code")}
+                  />
                 </div>
                 {errors.Code && (
                   <p className={classes.valError}>{errors.Code.message}</p>
@@ -88,8 +92,9 @@ const JoinBoard = () => {
                 )}
               </form>
             </div>
-      </div>
-     </>}
+          </div>
+        </>
+      )}
     </div>
   );
 };

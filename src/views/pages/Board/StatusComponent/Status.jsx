@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useCreateNewTaskMutation } from "../../../../state/createNewTask/api";
-import { useDeleteBoardMutation } from "../../../../state/deleteBoardStatus/api";
+import { useCreateNewTaskMutation } from "../../../../state/tasks/api";
+import { useDeleteBoardStatusMutation } from "../../../../state/boards/api";
 import LoadingSpinner from "../../../utils/LoadingSpinner/LoadingSpinner";
 import Task from "../TaskComponent/Task";
 import classes from "./Status.module.scss";
@@ -9,7 +9,7 @@ const Status = ({ statusID, userRole, name, tasks, setBoardStatuses }) => {
   const [inputValue, setInputValue] = useState("");
   const [createTask, { isLoading }] = useCreateNewTaskMutation();
   const [deleteBoardStatus, { isLoading: isDeleting, isSuccess }] =
-    useDeleteBoardMutation();
+    useDeleteBoardStatusMutation();
 
   function createNewTask() {
     const payload = {

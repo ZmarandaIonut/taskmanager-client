@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import reusable from "./../../resources/css/reusable.module.scss";
 import mainPageShape from "../../resources/shapes/mainPageShape.png";
 import mailImg from "../../resources/imgs/mail.png";
-import {useResendVerifyEmailMutation} from "../../../state/resendVerifyEmail/api";
+import { useResendVerifyEmailMutation } from "../../../state/user/api";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -42,7 +42,6 @@ const ResendVerifyEmail = () => {
       return navigate("/verify-email");
     }
   }, [isError, isSuccess]);
-
 
   return (
     <div className={reusable.main_container}>

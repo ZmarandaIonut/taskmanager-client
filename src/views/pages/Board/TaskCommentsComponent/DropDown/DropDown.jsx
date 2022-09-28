@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import { useGetBoardMembersQuery } from "../../../../../state/getBoardMembers/api";
+import { useGetBoardMembersQuery } from "../../../../../state/boards/api";
 import LoadingSpinner from "../../../../utils/LoadingSpinner/LoadingSpinner";
 import classes from "./DropDown.module.scss";
 

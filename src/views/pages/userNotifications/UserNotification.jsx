@@ -9,9 +9,9 @@ import classes from "./UserNotifications.module.scss";
 import reusable from "../../resources/css/reusable.module.scss";
 import mainPageShape from "../../resources/shapes/mainPageShape.png";
 import { setHasUserNewNotifications } from "../../../state/Reducers/userNotifications/hasUserNotifications";
-import { useLazyGetUserNotificationsQuery } from "../../../state/getUserNotifications/api";
-import { useDeleteNotifiactionMutation } from "../../../state/deleteNotification/api";
-import { useMarkNotificationAsSeenMutation } from "../../../state/markNotificationAsSeen/api";
+import { useLazyGetUserNotificationsQuery } from "../../../state/notifications/api";
+import { useDeleteNotifiactionMutation } from "../../../state/notifications/api";
+import { useMarkNotificationAsSeenMutation } from "../../../state/notifications/api";
 import Pusher from "pusher-js";
 import Echo from "laravel-echo";
 

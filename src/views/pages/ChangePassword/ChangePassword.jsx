@@ -6,7 +6,7 @@ import passwordImg from "../../resources/imgs/padlock.png";
 import mainPageShape from "../../resources/shapes/mainPageShape.png";
 import classes from "./ChangePassword.module.scss";
 import reusable from "./../../resources/css/reusable.module.scss";
-import { useChangePasswordMutation } from "../../../state/changePassword/api";
+import { useChangePasswordMutation } from "../../../state/user/api";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -56,7 +56,7 @@ const ChangePassword = () => {
       return navigate("/login");
     }
   }, [isError, isSuccess]);
-  
+
   return (
     <div className={reusable.main_container}>
       <div className={reusable.main_container_shape}>

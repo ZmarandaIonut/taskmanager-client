@@ -8,7 +8,7 @@ import LoadingSpinner from "../../utils/LoadingSpinner/LoadingSpinner";
 import { useDispatch, useSelector } from "react-redux";
 import { useLazyGetAuthUserQuery } from "../../../state/user/api";
 import { addUser } from "../../../state/user/user";
-import { useLazyGetBoardQuery } from "../../../state/getBoardContent/api";
+import { useLazyGetBoardContentQuery } from "../../../state/boards/api";
 import Status from "./StatusComponent/Status";
 import { FaUserFriends } from "react-icons/fa";
 import BoardMembers from "./BoardMembersComponent/BoardMembers";
@@ -17,8 +17,8 @@ import TaskPanel from "./TaskPanelComponent/TaskPanel";
 import { setPanelActive } from "../../../state/Reducers/displayTaskPanel/displayTaskPanel";
 import BoardInviteMembersPanel from "./BoardInviteMembersPanel/BoardInviteMembersPanel";
 import { setBoardInvitePanelActive } from "../../../state/Reducers/displayInviteUserPanel/displayInviteUserPanel";
-import { useDeleteUserBoardMutation } from "../../../state/deleteBoard/api";
-import { useArchiveBoardMutation } from "../../../state/archiveBoard/api";
+import { useDeleteUserBoardMutation } from "../../../state/boards/api";
+import { useArchiveBoardMutation } from "../../../state/boards/api";
 import TaskCommentsComponent from "./TaskCommentsComponent";
 import { setPanelStatus } from "../../../state/Reducers/displayTaskComments/displayTaskComments";
 import TaskHistoryPanel from "./TaskComponent/TaskHistoryPanel/TaskHistoryPanel";
@@ -44,7 +44,7 @@ const Board = () => {
       isLoading: isBoardContentLoading,
       isError: getBoardContentError,
     },
-  ] = useLazyGetBoardQuery();
+  ] = useLazyGetBoardContentQuery();
   const [
     deleteBoardMut,
     { isSuccess: hasBoardDeleted, isLoading: isBoardDeleting },

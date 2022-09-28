@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { useLoginUserMutation } from "../../../state/login/api";
+import { useLoginUserMutation } from "../../../state/user/api";
 import emailImg from "../../resources/imgs/mail.png";
 import passwordImg from "../../resources/imgs/padlock.png";
 import mainPageShape from "../../resources/shapes/mainPageShape.png";
@@ -97,7 +97,7 @@ const Login = () => {
                 {...register("Password")}
               />
             </div>
-            
+
             {errors.Password && (
               <p className={classes.val_error}>{errors.Password.message}</p>
             )}
@@ -109,13 +109,10 @@ const Login = () => {
             ) : (
               <div className={reusable.form_btn_container}>
                 <button>Login</button>
-                
               </div>
-              
             )}
           </form>
           <div className={reusable.form_anno}>
-          
             <p>Don't have an account?</p>
             <p onClick={_register}>
               <strong>Register now!</strong>

@@ -12,6 +12,7 @@ import {
 } from "../../../state/user/api";
 import LoadingSpinner from "../../utils/LoadingSpinner/LoadingSpinner";
 import { addUser } from "../../../state/user/user";
+import ProfilePageLoading from "../../utils/ProfilePageLoading/ProfilePageLoading";
 
 const Profile = () => {
   const [isUserAuth, setIsUserAuth] = useState();
@@ -81,86 +82,80 @@ const Profile = () => {
       <div className={reusable.main_container_shape}>
         <img src={mainPageShape} />
       </div>
-      {isLoading ? (
-        <LoadingSpinner />
+      {isLoading || !isUserAuth ? (
+        <ProfilePageLoading />
       ) : (
         <>
-          {isUserAuth && (
-            <>
-              <LeftPanel user={user} />
-              <div className={classes.container}>
-                <div className={classes.panelContent}>
-                  <div className={classes.panelHeader}>
-                    {user.id == id && (
-                      <div className={classes.uploadImageContainer}>
-                        <input
-                          type="button"
-                          value="Upload new image"
-                          onClick={handleClickFileInput}
-                        />
-                        <input
-                          type="file"
-                          style={{ display: "none" }}
-                          ref={hiddenFileInput}
-                          onChange={getFileInputContent}
-                        />
-                      </div>
-                    )}
-                    <h2>Profile page</h2>
+          <LeftPanel user={user} />
+          <div className={classes.container}>
+            <div className={classes.panelContent}>
+              <div className={classes.panelHeader}>
+                {user.id == id && (
+                  <div className={classes.uploadImageContainer}>
+                    <input
+                      type="button"
+                      value="Upload new image"
+                      onClick={handleClickFileInput}
+                    />
+                    <input
+                      type="file"
+                      style={{ display: "none" }}
+                      ref={hiddenFileInput}
+                      onChange={getFileInputContent}
+                    />
                   </div>
-                  {isLoading ? (
-                    <div className={classes.loadingUserContainer}>
-                      <LoadingSpinner />
-                    </div>
-                  ) : (
-                    <>
-                      {data ? (
-                        <div className={classes.userContainer}>
-                          <h2>{data.data.user.name}</h2>
-                          <div className={classes.profile}>
-                            {data && (
-                              <>
-                                {userImageProfile ? (
-                                  <img
-                                    src={
-                                      "http://localhost:8000/" +
-                                      data.data.profile_image
-                                    }
-                                    alt="profile_img"
-                                  />
-                                ) : (
-                                  <div className={classes.noUserImage}>
-                                    <p>
-                                      {data.data.user.name[0].toUpperCase()}
-                                    </p>
-                                  </div>
-                                )}
-                              </>
-                            )}
-                          </div>
-                          <p className={classes.userEmail}>
-                            <strong>Email: </strong>
-                            {data.data.user.email}
-                          </p>
-                          <p>
-                            <strong>Super-Admin:</strong>{" "}
-                            {data.data.user.isSuperAdmin ? "True" : "False"}
-                          </p>
-                          <p>
-                            <strong>Joined at:</strong>{" "}
-                            {data.data.user.email_verified_at &&
-                              new Date(
-                                data.data.user.email_verified_at
-                              ).toLocaleDateString()}
-                          </p>
-                        </div>
-                      ) : null}
-                    </>
-                  )}
-                </div>
+                )}
+                <h2>Profile page</h2>
               </div>
-            </>
-          )}
+              {isLoading ? (
+                <div className={classes.loadingUserContainer}>
+                  <LoadingSpinner />
+                </div>
+              ) : (
+                <>
+                  {data ? (
+                    <div className={classes.userContainer}>
+                      <h2>{data.data.user.name}</h2>
+                      <div className={classes.profile}>
+                        {data && (
+                          <>
+                            {userImageProfile ? (
+                              <img
+                                src={
+                                  "http://localhost:8000/" +
+                                  data.data.profile_image
+                                }
+                                alt="profile_img"
+                              />
+                            ) : (
+                              <div className={classes.noUserImage}>
+                                <p>{data.data.user.name[0].toUpperCase()}</p>
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </div>
+                      <p className={classes.userEmail}>
+                        <strong>Email: </strong>
+                        {data.data.user.email}
+                      </p>
+                      <p>
+                        <strong>Super-Admin:</strong>{" "}
+                        {data.data.user.isSuperAdmin ? "True" : "False"}
+                      </p>
+                      <p>
+                        <strong>Joined at:</strong>{" "}
+                        {data.data.user.email_verified_at &&
+                          new Date(
+                            data.data.user.email_verified_at
+                          ).toLocaleDateString()}
+                      </p>
+                    </div>
+                  ) : null}
+                </>
+              )}
+            </div>
+          </div>
         </>
       )}
     </div>

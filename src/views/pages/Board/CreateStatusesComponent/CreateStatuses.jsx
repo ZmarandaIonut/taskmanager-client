@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useEffect } from "react";
-import { useCreateNewStatusMutation } from "../../../../state/createNewStatus/api";
+import { useCreateNewStatusMutation } from "../../../../state/boards/api";
 import LoadingSpinner from "../../../utils/LoadingSpinner/LoadingSpinner";
 import classes from "./CreateStatuses.module.scss";
 
