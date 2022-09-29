@@ -20,7 +20,6 @@ const CenterPanel = () => {
     isLoading: isJoinedBoardsLoading,
     isSuccess: isJoinedBoarSucces,
   } = useGetBoardsWhereUserIsMemberQuery(joinedBoardsPage);
-
   return (
     <div className={classes.container}>
       <div className={classes.mainPanel}>

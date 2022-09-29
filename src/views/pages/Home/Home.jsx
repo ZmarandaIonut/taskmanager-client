@@ -9,6 +9,7 @@ import LoadingSpinner from '../../utils/LoadingSpinner/LoadingSpinner';
 import CenterPanel from './CenterPanel/CenterPanel';
 import { addUser } from '../../../state/user/user';
 import { useLazyGetAuthUserQuery } from '../../../state/user/api';
+import FakeHomePageInterface from '../../utils/HomePageLoading/FakeHomePageInterface';
 
 
 const Home = () => {
@@ -23,9 +24,6 @@ const Home = () => {
         if(!Object.keys(user).length){
            getUser();
         }
-        else{
-            setIsLoading(false);
-        }
     }, [])
 
     useEffect(() => {
@@ -34,7 +32,6 @@ const Home = () => {
        }
        if(isGetUserSucces){
           dispatch(addUser(userFromRequest.data.user));
-          setIsLoading(false);
        }
     }, [getUserError,isGetUserSucces]);
 
@@ -43,10 +40,13 @@ const Home = () => {
         <div className={reusable.main_container_shape}>
             <img src={mainPageShape}/>
         </div>
-        {!isLoading ? <>
+        {console.log(isLoading)}
+        {Object.keys(user).length === 0 ? <FakeHomePageInterface/> :
+            <>
             <LeftPanel user={user}/>
             <CenterPanel/>
-        </> : <LoadingSpinner/>}
+            </>
+            } 
     </div>
   )
 }
